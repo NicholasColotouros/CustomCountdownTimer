@@ -1,0 +1,13 @@
+package cct.gui;
+
+import javax.swing.JFrame;
+
+private static final String TITLE = "Countdown Timer";
+
+public class CustomCountdownTimerUI extends JFrame
+{
+	public CustomCountdownTimerUI()
+	{
+		super(TITLE);
+	}
+}

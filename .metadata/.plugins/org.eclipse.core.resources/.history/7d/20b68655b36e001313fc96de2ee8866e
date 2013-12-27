@@ -1,0 +1,8 @@
+package cct.gui;
+
+private static final String TITLE = "Canadian Political News";
+
+public class CustomCountdownTimerUI 
+{
+
+}
