@@ -1,8 +1,0 @@
-package cct.gui;
-
-private static final String TITLE = "Countdown Timer";
-
-public class CustomCountdownTimerUI 
-{
-	super(TITLE);
-}
