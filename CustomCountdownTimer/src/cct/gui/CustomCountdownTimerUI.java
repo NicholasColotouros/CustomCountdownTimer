@@ -1,5 +1,9 @@
 package cct.gui;
 
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -7,11 +11,14 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 public class CustomCountdownTimerUI extends JFrame
 {
 	private static final String TITLE = "Countdown Timer";
+	private static final double FRAME_HEIGHT_FACTOR = 0.4;
+	private static final double FRAME_WIDTH_FACTOR = 0.2;
 
 	public CustomCountdownTimerUI()
 	{
@@ -46,7 +53,22 @@ public class CustomCountdownTimerUI extends JFrame
 		helpMenu.add(aboutMenu);
 		menuBar.add(helpMenu);
 		
+		aboutMenu.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent pEvent)
+			{
+				JOptionPane.showMessageDialog(CustomCountdownTimerUI.this, "Made by Nicholas Nathan Colotouros.\nThis version of Custom Countdown Timer is still under development");
+			}
+		});
+		
 		setJMenuBar(menuBar);
+		
+		Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+		setSize(
+				(int) Math.round(screenSize.width * FRAME_WIDTH_FACTOR), 
+				(int) Math.round(screenSize.height * FRAME_HEIGHT_FACTOR)
+				);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
