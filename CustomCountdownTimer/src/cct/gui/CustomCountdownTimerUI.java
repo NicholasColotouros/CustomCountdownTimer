@@ -3,6 +3,8 @@ package cct.gui;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
@@ -16,6 +18,11 @@ import javax.swing.SwingUtilities;
 
 public class CustomCountdownTimerUI extends JFrame
 {
+	public static final String RESOURCE_BUNDLE_NAME = "CCT_EN_CA";
+	public static final Locale LOCALE = Locale.CANADA;
+	
+	public static final ResourceBundle STRINGS = ResourceBundle.getBundle(RESOURCE_BUNDLE_NAME, LOCALE);
+
 	private static final String TITLE = "Countdown Timer";
 	private static final double FRAME_HEIGHT_FACTOR = 0.4;
 	private static final double FRAME_WIDTH_FACTOR = 0.2;
@@ -27,17 +34,17 @@ public class CustomCountdownTimerUI extends JFrame
 		//Menu options
 		final JMenuBar menuBar = new JMenuBar();
 		
-		final JMenu fileMenu = new JMenu("File");
-		final JMenuItem newTimer = new JMenuItem("New Timer");
-		final JMenuItem loadTimer = new JMenuItem("Load Timer");
-		final JCheckBoxMenuItem autoLoadLastTimer = new JCheckBoxMenuItem("Load last timer on start");
-		final JMenuItem exit = new JMenuItem("Exit");
+		final JMenu fileMenu = new JMenu(STRINGS.getString("file"));
+		final JMenuItem newTimer = new JMenuItem(STRINGS.getString("new_timer"));
+		final JMenuItem loadTimer = new JMenuItem(STRINGS.getString("load_timer"));
+		final JCheckBoxMenuItem autoLoadLastTimer = new JCheckBoxMenuItem(STRINGS.getString("load_on_start"));
+		final JMenuItem exit = new JMenuItem(STRINGS.getString("exit"));
 		final JFileChooser newTimerFileChooser = new JFileChooser();
 		final JFileChooser loadTimerFileChooser = new JFileChooser();
 		
-		final JMenu helpMenu = new JMenu("Help");
-		final JMenuItem gettingStarted = new JMenuItem("Getting Started");
-		final JMenuItem aboutMenu = new JMenuItem("About");
+		final JMenu helpMenu = new JMenu(STRINGS.getString("help"));
+		final JMenuItem gettingStarted = new JMenuItem(STRINGS.getString("getting_started"));
+		final JMenuItem aboutMenu = new JMenuItem(STRINGS.getString("about"));
 
 		//File Menu construction
 		//TODO: implement
