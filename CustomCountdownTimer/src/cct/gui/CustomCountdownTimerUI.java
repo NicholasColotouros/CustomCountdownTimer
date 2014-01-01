@@ -50,6 +50,7 @@ public class CustomCountdownTimerUI extends JFrame
 
 		//File Menu construction
 		//TODO: implement
+		//exit implemented
 		fileMenu.add(newTimer);
 		fileMenu.add(loadTimer);
 		fileMenu.add(autoLoadLastTimer);
@@ -62,6 +63,15 @@ public class CustomCountdownTimerUI extends JFrame
 		helpMenu.add(aboutMenu);
 		menuBar.add(helpMenu);
 		
+		exit.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent pEvent)
+			{
+				System.exit(0);
+			}
+		});
+		
 		aboutMenu.addActionListener(new ActionListener()
 		{
 			@Override
@@ -71,6 +81,8 @@ public class CustomCountdownTimerUI extends JFrame
 			}
 		});
 		
+		//TODO: add window listener that asks if user is sure about closing
+		
 		setJMenuBar(menuBar);
 		
 		Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
@@ -78,7 +90,6 @@ public class CustomCountdownTimerUI extends JFrame
 				(int) Math.round(screenSize.width * FRAME_WIDTH_FACTOR), 
 				(int) Math.round(screenSize.height * FRAME_HEIGHT_FACTOR)
 				);
-		
 		
 		add(buildUI());
 		
