@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.swing.BoxLayout;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -14,6 +15,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 public class CustomCountdownTimerUI extends JFrame
@@ -77,8 +79,18 @@ public class CustomCountdownTimerUI extends JFrame
 				(int) Math.round(screenSize.height * FRAME_HEIGHT_FACTOR)
 				);
 		
+		
+		add(buildUI());
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
+	}
+	
+	private JPanel buildUI()
+	{
+		JPanel mainPanel = new JPanel();
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
+		return mainPanel;
 	}
 	
 	public static void main(String[] pArgs) 
