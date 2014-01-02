@@ -9,7 +9,7 @@ public class ControlUI extends JPanel
 {
 	public JPanel timeInputPanel;
 	public JPanel timeIntervalPanel;
-	public static ResourceBundle STRINGS = CustomCountdownTimerUI.getResourceBundle();
+	private static ResourceBundle STRINGS = CustomCountdownTimerUI.getResourceBundle();
 	
 	public ControlUI()
 	{		

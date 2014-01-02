@@ -63,6 +63,17 @@ public class CustomCountdownTimerUI extends JFrame
 		helpMenu.add(aboutMenu);
 		menuBar.add(helpMenu);
 		
+		newTimer.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent pEvent)
+			{
+				new TimerSetupWindow();
+				//TODO: lock out main window until the timer setup window is close
+				//TODO: have timer refresh afterwards
+			}
+		});
+		
 		exit.addActionListener(new ActionListener()
 		{
 			@Override
