@@ -104,6 +104,11 @@ public class CustomCountdownTimerUI extends JFrame
 		return mainPanel;
 	}
 	
+	public static ResourceBundle getResourceBundle()
+	{
+		return STRINGS;
+	}
+	
 	public static void main(String[] pArgs) 
 	{
 		SwingUtilities.invokeLater(new Runnable() {

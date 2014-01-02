@@ -1,5 +1,7 @@
 package cct.gui;
 
+import java.util.ResourceBundle;
+
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
@@ -7,6 +9,7 @@ public class ControlUI extends JPanel
 {
 	public JPanel timeInputPanel;
 	public JPanel timeIntervalPanel;
+	public static ResourceBundle STRINGS = CustomCountdownTimerUI.getResourceBundle();
 	
 	public ControlUI()
 	{		
