@@ -3,11 +3,15 @@ package cct.gui;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -69,7 +73,6 @@ public class CustomCountdownTimerUI extends JFrame
 			public void actionPerformed(ActionEvent pEvent)
 			{
 				new TimerSetupWindow();
-				//TODO: lock out main window until the timer setup window is close
 				//TODO: have timer refresh afterwards
 			}
 		});
@@ -105,6 +108,20 @@ public class CustomCountdownTimerUI extends JFrame
 		add(buildUI());
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		addWindowListener(new WindowAdapter()
+		{
+			//TODO: FIX. Works on clicking x, but does not interrupt shutdown. Does not trigger when going through file menu to exit
+			@Override 
+			public void windowClosing(WindowEvent e)
+			{
+				final JOptionPane savePane = new JOptionPane(STRINGS.getString("close_dialog"),
+						JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_CANCEL_OPTION);
+				
+				JDialog saveDialog = new JDialog();
+				saveDialog.add(savePane);
+				saveDialog.setVisible(true);
+			}
+		});
 		setVisible(true);
 	}
 	
