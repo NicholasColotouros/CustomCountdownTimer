@@ -82,7 +82,7 @@ public class CustomCountdownTimerUI extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent pEvent)
 			{
-				System.exit(0);
+				System.exit(0); //TODO: make it depose the frame instead or set it to invisible
 			}
 		});
 		
@@ -107,7 +107,7 @@ public class CustomCountdownTimerUI extends JFrame
 		
 		add(buildUI());
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter()
 		{
 			//TODO: FIX. Works on clicking x, but does not interrupt shutdown. Does not trigger when going through file menu to exit
@@ -118,6 +118,7 @@ public class CustomCountdownTimerUI extends JFrame
 						JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_CANCEL_OPTION);
 				
 				JDialog saveDialog = new JDialog();
+				saveDialog.setTitle(TITLE);
 				saveDialog.add(savePane);
 				saveDialog.setVisible(true);
 			}
