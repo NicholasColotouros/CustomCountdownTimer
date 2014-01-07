@@ -22,5 +22,4 @@ public class CountdownTimer
 		//TODO: sort reminders starting at 0:0, remove duplicates
 		reminders = pReminders;
 	}
-	
 }
