@@ -91,7 +91,7 @@ public class CustomCountdownTimerUI extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent pEvent)
 			{
-				JOptionPane.showMessageDialog(CustomCountdownTimerUI.this, "Made by Nicholas Nathan Colotouros.\nThis version of Custom Countdown Timer is still under development");
+				JOptionPane.showMessageDialog(CustomCountdownTimerUI.this, STRINGS.getString("about_text"));
 			}
 		});
 		
@@ -130,6 +130,7 @@ public class CustomCountdownTimerUI extends JFrame
 	{
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
+		mainPanel.add(new TimerMainWindowUI());
 		return mainPanel;
 	}
 	
