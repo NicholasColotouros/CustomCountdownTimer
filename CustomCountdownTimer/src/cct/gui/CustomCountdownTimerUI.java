@@ -105,7 +105,7 @@ public class CustomCountdownTimerUI extends JFrame
 				(int) Math.round(screenSize.height * FRAME_HEIGHT_FACTOR)
 				);
 		
-		add(buildUI());
+		add(buildUI(screenSize));
 		
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter()
@@ -126,11 +126,17 @@ public class CustomCountdownTimerUI extends JFrame
 		setVisible(true);
 	}
 	
-	private JPanel buildUI()
+	private JPanel buildUI(Dimension screenSize)
 	{
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
-		mainPanel.add(new TimerMainWindowUI());
+		
+		Dimension mainTimerSize = new Dimension
+				(
+						(int)(screenSize.getWidth() * FRAME_WIDTH_FACTOR),
+						(int)(screenSize.getHeight()* FRAME_HEIGHT_FACTOR)
+				);
+		mainPanel.add(new TimerMainWindowUI(mainTimerSize));
 		return mainPanel;
 	}
 	
