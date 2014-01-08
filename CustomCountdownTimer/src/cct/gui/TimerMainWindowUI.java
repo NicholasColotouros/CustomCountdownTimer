@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
@@ -13,29 +14,32 @@ public class TimerMainWindowUI extends JPanel
 {
 	private static final ResourceBundle STRINGS = CustomCountdownTimerUI.getResourceBundle();
 	
-	private JLabel lTimeRemaining = new JLabel("00:00");
+	private static final double TIMER_PANEL_HEIGHT_FACTOR = .5;
+	private static final double CONTROL_PANEL_HEIGHT_FACTOR = 1 - TIMER_PANEL_HEIGHT_FACTOR;
+	private static final int HORIZONTAL_COMPONENT_SPACE = 25;
+	
+	private JLabel lTimeRemaining = new JLabel("00:00"); //FOR TESTING: USE METHODS
 	
 	public TimerMainWindowUI(Dimension containerSize)
 	{
-		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+		int width = Math.abs(containerSize.width - HORIZONTAL_COMPONENT_SPACE);
+		int timerHeight = Math.abs((int)(containerSize.height * TIMER_PANEL_HEIGHT_FACTOR));
+		int controlHeight = Math.abs((int)(containerSize.height * CONTROL_PANEL_HEIGHT_FACTOR));
 		
-		System.out.println(containerSize.height+" "+containerSize.width);
-		setSize(containerSize);
+		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));		
+		setPreferredSize(new Dimension(width, containerSize.height));
+		setSize(getPreferredSize());
+		setMaximumSize(getPreferredSize());
 		
 		//Displays the amount of time remaining
 		JPanel displayPanel = new JPanel();
-		displayPanel.setPreferredSize(
-				new Dimension
-				(        //TODO: remove magic numbers (they're tests for spacing)
-						(int)(Math.abs(containerSize.width -50)), //don't want a negative number 
-						(int)(containerSize.height * 0.6)
-				));
+		displayPanel.setPreferredSize(new Dimension(width, timerHeight));
+		displayPanel.setMaximumSize(displayPanel.getPreferredSize());
 		displayPanel.setBorder(BorderFactory.createEtchedBorder());
-		
-		lTimeRemaining.setSize(displayPanel.getPreferredSize());//TODO: scale text and monospace it
+		//lTimeRemaining.setPreferredSize(displayPanel.getPreferredSize());
+		//TODO: scale text and monospace it
 		//TODO: support for longer than 99 minutes? ==> or just limit, design decision!
 		//TODO: implement update feature (observer)		
-		
 		
 		displayPanel.add(lTimeRemaining);
 		
@@ -46,23 +50,26 @@ public class TimerMainWindowUI extends JPanel
 				new Dimension
 				(
 						(int)(Math.abs(containerSize.width -50)), 
-						(int)(containerSize.height * 0.3)
+						(int)(containerSize.height * 0.5)
 				));
 		
 		//next reminder
 		JPanel nextReminderPanel = new JPanel();
 		nextReminderPanel.setBorder(BorderFactory.createTitledBorder(STRINGS.getString("next_reminder")));
 		nextReminderPanel.setPreferredSize(
-				new Dimension
-				(
-						(int)(controlPanel.getWidth()*.3),
-						controlPanel.getHeight()
-				));
+				new Dimension((int)(width*.3), controlHeight));
+		nextReminderPanel.setMaximumSize(nextReminderPanel.getPreferredSize());
 		
-		JLabel nextReminderLabel = new JLabel("00:00"); //TODO: scale text, monospace, support design decision from above, implement update
+		JLabel nextReminderLabel = new JLabel("00:00"); 
+		//TODO: scale text, monospace, support design decision from above, implement update
 		nextReminderPanel.add(nextReminderLabel);
-		controlPanel.add(nextReminderPanel);
 		
+		//buttons
+		JPanel buttonPanel = new JPanel();
+		JButton startButton = new JButton();
+		JButton stopButton = new JButton();
+		
+		controlPanel.add(nextReminderPanel);
 		//TODO: fix sizes, add buttons
 		
 		//buttons
