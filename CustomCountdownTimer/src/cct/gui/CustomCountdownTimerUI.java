@@ -28,7 +28,9 @@ public class CustomCountdownTimerUI extends JFrame
 	public static final Locale LOCALE = Locale.CANADA;
 	
 	public static final ResourceBundle STRINGS = ResourceBundle.getBundle(RESOURCE_BUNDLE_NAME, LOCALE);
-
+	
+	private static CustomCountdownTimerUI MAIN_WINDOW;
+	
 	private static final String TITLE = "Countdown Timer";
 	private static final double FRAME_HEIGHT_FACTOR = 0.4;
 	private static final double FRAME_WIDTH_FACTOR = 0.2;
@@ -84,7 +86,7 @@ public class CustomCountdownTimerUI extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent pEvent)
 			{
-				System.exit(0); //TODO: make it depose the frame instead or set it to invisible
+				MAIN_WINDOW.dispatchEvent(new WindowEvent(MAIN_WINDOW, WindowEvent.WINDOW_CLOSING));
 			}
 		});
 		
@@ -103,8 +105,8 @@ public class CustomCountdownTimerUI extends JFrame
 		
 		Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 		setSize(
-				(int) Math.round(screenSize.width * FRAME_WIDTH_FACTOR), 
-				(int) Math.round(screenSize.height * FRAME_HEIGHT_FACTOR)
+					(int) Math.round(screenSize.width * FRAME_WIDTH_FACTOR), 
+					(int) Math.round(screenSize.height * FRAME_HEIGHT_FACTOR)
 				);
 		
 		add(buildUI(screenSize));
@@ -174,7 +176,7 @@ public class CustomCountdownTimerUI extends JFrame
 			@Override
 			public void run() 
 			{
-				new CustomCountdownTimerUI();				
+				MAIN_WINDOW = new CustomCountdownTimerUI();				
 			}
 		});
 	}	
