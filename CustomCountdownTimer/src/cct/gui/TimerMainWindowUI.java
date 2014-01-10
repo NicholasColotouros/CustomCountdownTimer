@@ -27,7 +27,6 @@ public class TimerMainWindowUI extends JPanel
 		int width = Math.abs(containerSize.width - HORIZONTAL_COMPONENT_SPACE);
 		int timerHeight = Math.abs((int)(containerSize.height * TIMER_PANEL_HEIGHT_FACTOR));
 		int controlHeight = Math.abs((int)(containerSize.height * CONTROL_PANEL_HEIGHT_FACTOR - VERTICAL_COMPONENT_SPACE));
-		System.out.println(timerHeight+" "+controlHeight);
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));		
 		setPreferredSize(new Dimension(width, containerSize.height));
 		setSize(getPreferredSize());
