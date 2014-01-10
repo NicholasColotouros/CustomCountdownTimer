@@ -17,6 +17,7 @@ public class TimerMainWindowUI extends JPanel
 	private static final double TIMER_PANEL_HEIGHT_FACTOR = .5;
 	private static final double CONTROL_PANEL_HEIGHT_FACTOR = 1 - TIMER_PANEL_HEIGHT_FACTOR;
 	private static final int HORIZONTAL_COMPONENT_SPACE = 25;
+	private static final int VERTICAL_COMPONENT_SPACE = 80;
 	
 	private JLabel lTimeRemaining = new JLabel("00:00"); //FOR TESTING: USE METHODS
 	
@@ -24,8 +25,8 @@ public class TimerMainWindowUI extends JPanel
 	{
 		int width = Math.abs(containerSize.width - HORIZONTAL_COMPONENT_SPACE);
 		int timerHeight = Math.abs((int)(containerSize.height * TIMER_PANEL_HEIGHT_FACTOR));
-		int controlHeight = Math.abs((int)(containerSize.height * CONTROL_PANEL_HEIGHT_FACTOR));
-		
+		int controlHeight = Math.abs((int)(containerSize.height * CONTROL_PANEL_HEIGHT_FACTOR - VERTICAL_COMPONENT_SPACE));
+		System.out.println(timerHeight+" "+controlHeight);
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));		
 		setPreferredSize(new Dimension(width, containerSize.height));
 		setSize(getPreferredSize());
@@ -66,10 +67,11 @@ public class TimerMainWindowUI extends JPanel
 		
 		//buttons
 		JPanel buttonPanel = new JPanel();
-		JButton startButton = new JButton();
+		JButton startButton = new JButton(STRINGS.getString("start"));
 		JButton stopButton = new JButton();
 		
 		controlPanel.add(nextReminderPanel);
+		controlPanel.add(startButton);
 		//TODO: fix sizes, add buttons
 		
 		//buttons
