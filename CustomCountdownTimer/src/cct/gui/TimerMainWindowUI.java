@@ -1,6 +1,7 @@
 package cct.gui;
 
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
@@ -46,6 +47,7 @@ public class TimerMainWindowUI extends JPanel
 		
 		
 		//Contains start/pause/stop buttons
+		//TODO: control panel sizes don't look so great - not uniform
 		JPanel controlPanel = new JPanel();
 		controlPanel.setSize(
 				new Dimension
@@ -67,14 +69,30 @@ public class TimerMainWindowUI extends JPanel
 		
 		//buttons
 		JPanel buttonPanel = new JPanel();
+		buttonPanel.setLayout(new GridLayout(3,3));
+		buttonPanel.setSize(new Dimension
+				(
+						controlPanel.getWidth() - (nextReminderPanel.getPreferredSize().width + HORIZONTAL_COMPONENT_SPACE),
+						controlPanel.getPreferredSize().height
+				));
+		//TODO: consider using bag layout so that start button is larger?
+		//TODO: consider removing some buttons -- looks cluttered
 		JButton startButton = new JButton(STRINGS.getString("start"));
-		JButton stopButton = new JButton();
+		JButton stopButton = new JButton(STRINGS.getString("stop"));
+		JButton saveButton = new JButton(STRINGS.getString("save"));
+		JButton loadButton = new JButton(STRINGS.getString("load"));
+		JButton newTimerButton = new JButton(STRINGS.getString("new_timer"));
+		JButton exitButton = new JButton(STRINGS.getString("exit"));
+		
+		buttonPanel.add(startButton);
+		buttonPanel.add(stopButton);
+		buttonPanel.add(saveButton);
+		buttonPanel.add(loadButton);
+		buttonPanel.add(newTimerButton);
+		buttonPanel.add(exitButton);
 		
 		controlPanel.add(nextReminderPanel);
-		controlPanel.add(startButton);
-		//TODO: fix sizes, add buttons
-		
-		//buttons
+		controlPanel.add(buttonPanel);
 		
 		//adding everything to the main panel
 		add(displayPanel);

@@ -42,6 +42,7 @@ public class CustomCountdownTimerUI extends JFrame
 		
 		final JMenu fileMenu = new JMenu(STRINGS.getString("file"));
 		final JMenuItem newTimer = new JMenuItem(STRINGS.getString("new_timer"));
+		final JMenuItem saveTimer = new JMenuItem(STRINGS.getString("save_timer"));
 		final JMenuItem loadTimer = new JMenuItem(STRINGS.getString("load_timer"));
 		final JCheckBoxMenuItem autoLoadLastTimer = new JCheckBoxMenuItem(STRINGS.getString("load_on_start"));
 		final JMenuItem exit = new JMenuItem(STRINGS.getString("exit"));
@@ -56,6 +57,7 @@ public class CustomCountdownTimerUI extends JFrame
 		//TODO: implement
 		//exit implemented
 		fileMenu.add(newTimer);
+		fileMenu.add(saveTimer);
 		fileMenu.add(loadTimer);
 		fileMenu.add(autoLoadLastTimer);
 		fileMenu.add(exit);
