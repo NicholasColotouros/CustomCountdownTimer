@@ -84,6 +84,7 @@ public class TimerMainWindowUI extends JPanel
 		JButton newTimerButton = new JButton(STRINGS.getString("new_timer"));
 		JButton exitButton = new JButton(STRINGS.getString("exit"));
 		
+		//TODO: implement action listeners
 		buttonPanel.add(startButton);
 		buttonPanel.add(stopButton);
 		buttonPanel.add(saveButton);

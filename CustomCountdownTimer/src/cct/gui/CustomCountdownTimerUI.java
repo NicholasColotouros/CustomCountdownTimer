@@ -116,13 +116,33 @@ public class CustomCountdownTimerUI extends JFrame
 			@Override 
 			public void windowClosing(WindowEvent e)
 			{
-				final JOptionPane savePane = new JOptionPane(STRINGS.getString("close_dialog"),
-						JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_CANCEL_OPTION);
+				Object[] options = { 
+						STRINGS.getString("yes"),
+						STRINGS.getString("no"),
+						STRINGS.getString("cancel")
+				};
+								
+				JOptionPane savePane = new JOptionPane();
 				
-				JDialog saveDialog = new JDialog();
-				saveDialog.setTitle(TITLE);
-				saveDialog.add(savePane);
-				saveDialog.setVisible(true);
+				int n = JOptionPane.showOptionDialog(savePane, 
+						STRINGS.getString("close_dialog"), 
+						TITLE, 
+						JOptionPane.YES_NO_CANCEL_OPTION, 
+						JOptionPane.QUESTION_MESSAGE, 
+						null, 
+						options, 
+						options[2]);
+				
+				if(n == 0) //yes is selected
+				{
+					//TODO: bring up save, then close program
+				}
+				
+				//no is selected
+				if(n == 1) System.exit(0);
+				
+				//cancel is selected
+				else savePane.setVisible(false);
 			}
 		});
 		setVisible(true);
