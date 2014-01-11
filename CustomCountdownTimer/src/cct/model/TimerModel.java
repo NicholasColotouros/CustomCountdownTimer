@@ -6,7 +6,7 @@ import java.util.Timer;
 
 //use this to run the new thread, make observable or whatever the final implementation is
 //make sure to support pausing, adding, resetting, starting
-public class TimerModel extends Observable implements Runnable
+public class TimerModel extends Observable
 {
 	CountdownTimer timer;
 	
@@ -20,12 +20,10 @@ public class TimerModel extends Observable implements Runnable
 		timeRemaining = 0;
 		isRunning = false;
 	}
-
-	@Override
-	public void run() 
+	
+	public void setTimer(CountdownTimer aTimer)
 	{
 		
-		// TODO Auto-generated method stub	
 	}
-	
 }
+
