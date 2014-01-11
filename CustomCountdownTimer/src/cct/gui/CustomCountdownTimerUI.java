@@ -5,16 +5,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -22,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+@SuppressWarnings("serial")
 public class CustomCountdownTimerUI extends JFrame
 {
 	public static final String RESOURCE_BUNDLE_NAME = "CCT_EN_CA";
@@ -172,7 +170,6 @@ public class CustomCountdownTimerUI extends JFrame
 	public static void main(String[] pArgs) 
 	{
 		SwingUtilities.invokeLater(new Runnable() {
-			@SuppressWarnings("unused")
 			@Override
 			public void run() 
 			{

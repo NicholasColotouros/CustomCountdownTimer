@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class ControlUI extends JPanel 
 {
 	public JPanel timeInputPanel;
