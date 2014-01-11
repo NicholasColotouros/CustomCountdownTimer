@@ -1,9 +1,11 @@
 package cct.model;
 
+import java.util.Comparator;
+
 import cct.exceptions.NegativeInputException;
 import cct.exceptions.TimerOverflowException;
 
-public class TimeInterval 
+public class TimeInterval implements Comparator
 {
 	private int seconds;
 	private int minutes;
@@ -44,13 +46,38 @@ public class TimeInterval
 		minutes = pMinutes;
 	}
 	
+	/**
+	 * @return the total time of the time interval in seconds.
+	 */
+	public int getTotalTimeInSeconds()
+	{
+		return minutes * 60 + seconds;
+	}
+	
+	/**
+	 * @return the number of seconds stored in the interval when minutes are ignored.
+	 */
 	public int getSeconds()
 	{
 		return seconds;
 	}
 	
+	/**
+	 * @return the number of minutes stored in the interval.
+	 */
 	public int getMinutes()
 	{
 		return minutes;
+	}
+
+	@Override
+	public int compare(Object arg0, Object arg1) 
+	{
+		int t1 = ((TimeInterval) arg0).getTotalTimeInSeconds();
+		int t2 = ((TimeInterval) arg1).getTotalTimeInSeconds();
+		
+		if(t1 > t2) return 1;
+		else if(t1 < t2) return -1;
+		else return 0;
 	}
 }
