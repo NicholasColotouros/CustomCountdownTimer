@@ -31,16 +31,14 @@ public class TestTimeInterval
 		{
 			TimeInterval badInterval = new TimeInterval(-1, 0);
 		}
-		catch(NegativeInputException e)
-		{
-		}
+		catch(NegativeInputException e){}
+		catch(TimerOverflowException e){fail();}
 		try
 		{
 			TimeInterval badInterval2 = new TimeInterval(0, -1);
 		}
-		catch(NegativeInputException e)
-		{
-		}
+		catch(NegativeInputException e){}
+		catch(TimerOverflowException e){fail();}
 
 	}
 }
