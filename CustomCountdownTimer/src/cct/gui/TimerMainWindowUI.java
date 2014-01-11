@@ -76,20 +76,13 @@ public class TimerMainWindowUI extends JPanel
 				));
 		//TODO: consider using bag layout so that start button is larger?
 		//TODO: consider removing some buttons -- looks cluttered
+		//TODO: turn start into pause button
 		JButton startButton = new JButton(STRINGS.getString("start"));
 		JButton stopButton = new JButton(STRINGS.getString("stop"));
-		JButton saveButton = new JButton(STRINGS.getString("save"));
-		JButton loadButton = new JButton(STRINGS.getString("load"));
-		JButton newTimerButton = new JButton(STRINGS.getString("new_timer"));
-		JButton exitButton = new JButton(STRINGS.getString("exit"));
 		
 		//TODO: implement action listeners
 		buttonPanel.add(startButton);
 		buttonPanel.add(stopButton);
-		buttonPanel.add(saveButton);
-		buttonPanel.add(loadButton);
-		buttonPanel.add(newTimerButton);
-		buttonPanel.add(exitButton);
 		
 		controlPanel.add(nextReminderPanel);
 		controlPanel.add(buttonPanel);
