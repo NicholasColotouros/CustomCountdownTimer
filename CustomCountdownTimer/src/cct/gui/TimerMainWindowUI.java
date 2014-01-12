@@ -2,6 +2,8 @@ package cct.gui;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
@@ -10,6 +12,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
+
+import cct.model.TimerModel;
 
 public class TimerMainWindowUI extends JPanel
 {
@@ -75,12 +79,27 @@ public class TimerMainWindowUI extends JPanel
 						controlPanel.getPreferredSize().height
 				));
 		//TODO: consider using bag layout so that start button is larger?
-		//TODO: consider removing some buttons -- looks cluttered
 		//TODO: turn start into pause button
 		JButton startButton = new JButton(STRINGS.getString("start"));
 		JButton stopButton = new JButton(STRINGS.getString("stop"));
 		
-		//TODO: implement action listeners
+		//action listeners for start and stop
+		startButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent pEvent)
+			{
+				TimerModel.getInstance().start();
+			}
+		});
+		
+		stopButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent pEvent)
+			{
+				TimerModel.getInstance().stop();
+			}
+		});
+
 		buttonPanel.add(startButton);
 		buttonPanel.add(stopButton);
 		

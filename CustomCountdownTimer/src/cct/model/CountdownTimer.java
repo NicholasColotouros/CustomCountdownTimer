@@ -3,6 +3,8 @@ package cct.model;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import cct.exceptions.ReminderLongerThanDurationException;
+
 //the model that will be saved, loaded and used when making the timer
 //TODO: implement serializability
 //This is the class to be serialized -- I don't want to serialize when it was stopped
@@ -26,7 +28,8 @@ public class CountdownTimer
 	 * @param pDuration how long the timer will be counting down once started.
 	 * @param pReminders list of times for when the timer will alert the user.
 	 */
-	CountdownTimer(TimeInterval pDuration, ArrayList<TimeInterval> pReminders)
+	CountdownTimer(TimeInterval pDuration, ArrayList<TimeInterval> pReminders) 
+			throws ReminderLongerThanDurationException
 	{
 		duration = pDuration;
 		Collections.sort(pReminders);
@@ -52,6 +55,12 @@ public class CountdownTimer
 			pReminders.add(new TimeInterval());
 		}
 		
+		//if the first reminder (which would be the one with the longest time in seconds)
+		//is greater than the length of the timer itself, throw an exception
+		if(pReminders.get(0).getTotalTimeInSeconds() >= pDuration.getTotalTimeInSeconds())
+		{
+			throw new ReminderLongerThanDurationException();
+		}
 		
 		reminders = pReminders;
 	}

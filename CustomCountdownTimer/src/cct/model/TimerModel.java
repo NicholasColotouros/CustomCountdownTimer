@@ -8,8 +8,9 @@ import java.util.Timer;
 //make sure to support pausing, adding, resetting, starting
 public class TimerModel extends Observable
 {
-	CountdownTimer timer;
+	private static final TimerModel INSTANCE = new TimerModel();
 	
+	private CountdownTimer timer;
 	private int timeRemaining;
 	private int timeStopped;
 	private boolean isRunning;
@@ -21,9 +22,29 @@ public class TimerModel extends Observable
 		isRunning = false;
 	}
 	
+	public static TimerModel getInstance()
+	{
+		return INSTANCE;
+	}
+	
 	public void setTimer(CountdownTimer aTimer)
 	{
-		
+		timer = aTimer;
+	}
+	
+	public void start()
+	{
+		//TODO
+	}
+	
+	public void stop()
+	{
+		//TODO
+	}
+	
+	public void pause()
+	{
+		//TODO
 	}
 }
 
