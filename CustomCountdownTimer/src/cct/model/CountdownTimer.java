@@ -1,14 +1,15 @@
 package cct.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 //the model that will be saved, loaded and used when making the timer
 //TODO: implement serializability
 //This is the class to be serialized -- I don't want to serialize when it was stopped
 public class CountdownTimer 
 {
-	TimeInterval duration;
-	ArrayList<TimeInterval> reminders;
+	protected TimeInterval duration;
+	protected ArrayList<TimeInterval> reminders;
 	
 	/**
 	 * Constructor for when there are no defined reminders.
@@ -22,14 +23,36 @@ public class CountdownTimer
 	}
 	
 	/**
-	 * 
-	 * @param pDuration how long the timer will be counting down once started
-	 * @param pReminders list of times for when the timer will alert the user
+	 * @param pDuration how long the timer will be counting down once started.
+	 * @param pReminders list of times for when the timer will alert the user.
 	 */
 	CountdownTimer(TimeInterval pDuration, ArrayList<TimeInterval> pReminders)
 	{
 		duration = pDuration;
-		//TODO: sort reminders starting at 0:0, remove duplicates
+		Collections.sort(pReminders);
+
+		//removes duplicates
+		java.util.Stack<Integer> deletionStack = new java.util.Stack<Integer>();
+		for(int i = 0; i < pReminders.size()-1; i++)
+		{
+			if(pReminders.get(i).getTotalTimeInSeconds() == pReminders.get(i).getTotalTimeInSeconds())
+			{
+				deletionStack.push(i);
+			}
+		}
+		
+		while(!deletionStack.isEmpty())
+		{
+			pReminders.remove(deletionStack.pop());
+		}
+		
+		//adds 00:00 if not already in the list
+		if(pReminders.get(pReminders.size()-1).getTotalTimeInSeconds() != 0)
+		{
+			pReminders.add(new TimeInterval());
+		}
+		
+		
 		reminders = pReminders;
 	}
 }

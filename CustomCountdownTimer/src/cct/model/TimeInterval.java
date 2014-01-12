@@ -5,7 +5,7 @@ import java.util.Comparator;
 import cct.exceptions.NegativeInputException;
 import cct.exceptions.TimerOverflowException;
 
-public class TimeInterval implements Comparator
+public class TimeInterval implements Comparable<TimeInterval>
 {
 	private int seconds;
 	private int minutes;
@@ -71,13 +71,15 @@ public class TimeInterval implements Comparator
 	}
 
 	@Override
-	public int compare(Object arg0, Object arg1) 
-	{
-		int t1 = ((TimeInterval) arg0).getTotalTimeInSeconds();
-		int t2 = ((TimeInterval) arg1).getTotalTimeInSeconds();
+	/**
+	 * Sorts so that the first item has the longest interval
+	 */
+	public int compareTo(TimeInterval arg0) {
+		int t1 = ((TimeInterval) this).getTotalTimeInSeconds();
+		int t2 = ((TimeInterval) arg0).getTotalTimeInSeconds();
 		
-		if(t1 > t2) return 1;
-		else if(t1 < t2) return -1;
+		if(t1 > t2) return -1;
+		else if(t1 < t2) return 1;
 		else return 0;
 	}
 }
