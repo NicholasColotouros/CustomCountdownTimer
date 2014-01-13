@@ -24,6 +24,7 @@ public class TimerModel extends Observable
 	private Timer cdTimer;
 	private boolean isRunning;
 	
+	//TODO: fix bug in initiation of singleton
 	private TimerModel()
 	{
 		timer = new CountdownTimer(new TimeInterval());

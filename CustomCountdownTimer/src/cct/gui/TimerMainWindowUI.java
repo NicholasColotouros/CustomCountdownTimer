@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
@@ -14,6 +15,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import cct.model.CountdownTimer;
+import cct.model.TimeInterval;
 import cct.model.TimerModel;
 
 @SuppressWarnings("serial")
@@ -32,6 +35,22 @@ public class TimerMainWindowUI extends JPanel implements java.util.Observer
 	
 	public TimerMainWindowUI(Dimension containerSize)
 	{
+		//TODO: remove this debug code
+		try
+		{
+			TimeInterval duration = new TimeInterval(30,1);
+			ArrayList<TimeInterval> reminders = new ArrayList<TimeInterval>();
+			reminders.add(new TimeInterval(10,0));
+			reminders.add(new TimeInterval(10,1));
+			reminders.add(new TimeInterval(25,1));
+			reminders.add(new TimeInterval(0,1));
+			System.out.println("here");
+			TimerModel.getInstance().setTimer(new CountdownTimer(duration, reminders));
+			System.out.println("timerModel set");
+		}catch(Exception e){System.out.println(e.toString());}
+		
+		//END DEBUG
+		
 		TimerModel.getInstance().addObserver(this);
 		
 		int width = Math.abs(containerSize.width - HORIZONTAL_COMPONENT_SPACE);

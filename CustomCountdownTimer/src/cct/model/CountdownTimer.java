@@ -23,7 +23,7 @@ public class CountdownTimer
 	 * Constructor for when there are no defined reminders.
 	 * @param pDuration how long the timer will be counting down once started.
 	 */
-	CountdownTimer(TimeInterval pDuration)
+	public CountdownTimer(TimeInterval pDuration)
 	{
 		duration = pDuration;
 		reminders = new ArrayList<TimeInterval>();
@@ -34,7 +34,7 @@ public class CountdownTimer
 	 * @param pDuration how long the timer will be counting down once started.
 	 * @param pReminders list of times for when the timer will alert the user.
 	 */
-	CountdownTimer(TimeInterval pDuration, ArrayList<TimeInterval> pReminders) 
+	public CountdownTimer(TimeInterval pDuration, ArrayList<TimeInterval> pReminders) 
 			throws ReminderLongerThanDurationException
 	{
 		duration = pDuration;

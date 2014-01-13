@@ -14,7 +14,7 @@ public class TimeInterval implements Comparable<TimeInterval>
 	/**
 	 * Constructor for when a timer of 0 length is needed
 	 */
-	TimeInterval()
+	public TimeInterval()
 	{
 		seconds = 0;
 		minutes = 0;
@@ -30,7 +30,7 @@ public class TimeInterval implements Comparable<TimeInterval>
 	 * @throws NegativeInputException when a negative number is passed as an argument.
 	 * @throws TimerOverflowException when a time interval greater than what is supported is given. 
 	 */
-	TimeInterval(int pSeconds, int pMinutes) throws NegativeInputException, TimerOverflowException
+	public TimeInterval(int pSeconds, int pMinutes) throws NegativeInputException, TimerOverflowException
 	{
 		if(pSeconds < 0 || pMinutes < 0) throw new NegativeInputException();
 		
