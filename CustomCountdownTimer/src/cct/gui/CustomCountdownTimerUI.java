@@ -33,7 +33,10 @@ public class CustomCountdownTimerUI extends JFrame
 	private static final double FRAME_HEIGHT_FACTOR = 0.4;
 	private static final double FRAME_WIDTH_FACTOR = 0.2;
 
-	public CustomCountdownTimerUI()
+	/**
+	 * The main constructor for the application
+	 */
+	private CustomCountdownTimerUI()
 	{
 		super(TITLE);
 		
@@ -96,9 +99,7 @@ public class CustomCountdownTimerUI extends JFrame
 				JOptionPane.showMessageDialog(CustomCountdownTimerUI.this, STRINGS.getString("about_text"));
 			}
 		});
-		
-		//TODO: add window listener that asks if user is sure about closing
-		
+				
 		setJMenuBar(menuBar);
 		
 		Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
@@ -106,13 +107,16 @@ public class CustomCountdownTimerUI extends JFrame
 					(int) Math.round(screenSize.width * FRAME_WIDTH_FACTOR), 
 					(int) Math.round(screenSize.height * FRAME_HEIGHT_FACTOR)
 				);
+		//END MENU BAR CONSTRUCTION
+		
+		
+		
 		
 		add(buildUI(screenSize));
 		
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter()
 		{
-			//TODO: FIX. Works on clicking x, but does not interrupt shutdown. Does not trigger when going through file menu to exit
 			@Override 
 			public void windowClosing(WindowEvent e)
 			{
@@ -145,9 +149,11 @@ public class CustomCountdownTimerUI extends JFrame
 				else savePane.setVisible(false);
 			}
 		});
-		setVisible(true);
 	}
 	
+	/**
+	 * Constructs the part of the window that isn't the menu bar
+	 */
 	private JPanel buildUI(Dimension screenSize)
 	{
 		JPanel mainPanel = new JPanel();
@@ -173,7 +179,8 @@ public class CustomCountdownTimerUI extends JFrame
 			@Override
 			public void run() 
 			{
-				MAIN_WINDOW = new CustomCountdownTimerUI();				
+				MAIN_WINDOW = new CustomCountdownTimerUI();	
+				MAIN_WINDOW.setVisible(true);
 			}
 		});
 	}	
