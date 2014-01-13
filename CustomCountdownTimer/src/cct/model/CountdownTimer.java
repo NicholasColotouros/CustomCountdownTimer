@@ -16,8 +16,8 @@ import cct.exceptions.ReminderLongerThanDurationException;
  */
 public class CountdownTimer 
 {
-	protected TimeInterval duration;
-	protected ArrayList<TimeInterval> reminders;
+	public TimeInterval duration;
+	public ArrayList<TimeInterval> reminders;
 	
 	/**
 	 * Constructor for when there are no defined reminders.
@@ -69,5 +69,5 @@ public class CountdownTimer
 		}
 		
 		reminders = pReminders;
-	}
+	}	
 }

@@ -10,14 +10,14 @@ import javax.swing.Timer;
  * The model that is used by the GUI to track how much time
  * is remaining and trigger the alerts.
  */
+//TODO: test
 public class TimerModel extends Observable
 {
 	private static final TimerModel INSTANCE = new TimerModel();
 	
 	private CountdownTimer timer;
 	private int timeRemaining;
-	private int timeStopped;
-	private boolean isRunning;
+	private int currentReminder;
 	
 	private Timer cdTimer;
 	
@@ -25,8 +25,7 @@ public class TimerModel extends Observable
 	{
 		timer = new CountdownTimer(new TimeInterval());
 		timeRemaining = 0;
-		timeStopped = 0;
-		isRunning = false;
+		currentReminder = 0;
 	}
 	
 	/**
@@ -63,21 +62,52 @@ public class TimerModel extends Observable
 	 */
 	public void start()
 	{
-		//TODO
-		if(timeRemaining == 0) return; //do nothing if there is no time remaining
+		//do nothing if there is no time remaining
+		if(timer.duration.getTotalTimeInSeconds() == 0) return; 
 		
-		int delay = 1000; //milliseconds
-		cdTimer = new Timer(delay, new ActionListener()
+		//if the timer has ended and start button pressed
+		//reset the timer and start again
+		if(timeRemaining == 0)
 		{
-			@Override
-			public void actionPerformed(ActionEvent pEvent)
-			{
-				//TODO: check how much time is remaining, update the timer as needed.
-				//This is messy code, clean it up
-			}
-		});
+			timeRemaining = timer.duration.getTotalTimeInSeconds();
+		}
 		
-		cdTimer.start();
+		//else if the timer didn't finish, continue from where it left off
+		else if(timeRemaining < timer.duration.getTotalTimeInSeconds())
+		{
+			cdTimer.start();
+		}
+		
+		//else timer starts from the beginning
+		else
+		{
+			int delay = 1000; //milliseconds
+			cdTimer = new Timer(delay, new ActionListener()
+			{
+				@Override
+				public void actionPerformed(ActionEvent pEvent)
+				{
+					//if the time remaining is the same as the next reminder
+					if(timeRemaining == timer.reminders.get(currentReminder).getTotalTimeInSeconds())
+					{
+						//TODO: trigger alert
+						currentReminder++; //move to the next reminder
+					}
+					
+					//When the timer reaches 0
+					if(timeRemaining == 0)
+					{
+						Timer source = (Timer)pEvent.getSource();
+						source.stop();
+						//TODO: signal pause button to turn back into start button.
+					}
+					
+					timeRemaining--;
+				}
+			});
+			
+			cdTimer.start();
+		}
 	}
 	
 	/**
@@ -85,14 +115,13 @@ public class TimerModel extends Observable
 	 */
 	public void stopAndReset()
 	{
-		//TODO
 		if(cdTimer.isRunning())
 		{
 			cdTimer.stop();
+			//TODO: signal pause button to turn into start button
 		}		
 		timeRemaining = timer.duration.getTotalTimeInSeconds();
-		//TODO: reset the next reminder
-
+		currentReminder = 0;
 	}
 	
 	/**
@@ -101,7 +130,7 @@ public class TimerModel extends Observable
 	 */
 	public void pause()
 	{
-		//TODO
+		cdTimer.stop();
 	}
 }
 

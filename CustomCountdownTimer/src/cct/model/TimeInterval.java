@@ -12,7 +12,7 @@ public class TimeInterval implements Comparable<TimeInterval>
 	private int minutes;
 	
 	/**
-	 * Placeholder constructor for when a timer of 0 length is needed
+	 * Constructor for when a timer of 0 length is needed
 	 */
 	TimeInterval()
 	{
