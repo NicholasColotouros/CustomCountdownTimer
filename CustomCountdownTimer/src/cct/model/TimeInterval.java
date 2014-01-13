@@ -70,6 +70,19 @@ public class TimeInterval implements Comparable<TimeInterval>
 	{
 		return minutes;
 	}
+	
+	/**
+	 * @return returns a string representation in the format 00:00
+	 */
+	public String toString()
+	{
+		String minString;
+		if(minutes < 10) minString = new String("0" + minutes + ":");
+		else minString = new String(minutes + ":");
+		
+		if(seconds < 10) return minString + "0" + seconds;
+		else return minString + seconds;
+	}
 
 	@Override
 	/**

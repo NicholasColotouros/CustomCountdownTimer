@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
 import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
@@ -11,12 +12,16 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 
 import cct.model.TimerModel;
 
-public class TimerMainWindowUI extends JPanel
+@SuppressWarnings("serial")
+public class TimerMainWindowUI extends JPanel implements java.util.Observer
 {
+	private JLabel lTimeRemaining; //FOR TESTING: USE METHODS
+	private JLabel lNextReminder;
+
+	
 	private static final ResourceBundle STRINGS = CustomCountdownTimerUI.getResourceBundle();
 	
 	private static final double TIMER_PANEL_HEIGHT_FACTOR = .5;
@@ -24,13 +29,15 @@ public class TimerMainWindowUI extends JPanel
 	private static final int HORIZONTAL_COMPONENT_SPACE = 25;
 	private static final int VERTICAL_COMPONENT_SPACE = 80;
 	
-	private JLabel lTimeRemaining = new JLabel("00:00"); //FOR TESTING: USE METHODS
-	
 	public TimerMainWindowUI(Dimension containerSize)
 	{
+		TimerModel.getInstance().addObserver(this);
+		
 		int width = Math.abs(containerSize.width - HORIZONTAL_COMPONENT_SPACE);
 		int timerHeight = Math.abs((int)(containerSize.height * TIMER_PANEL_HEIGHT_FACTOR));
-		int controlHeight = Math.abs((int)(containerSize.height * CONTROL_PANEL_HEIGHT_FACTOR - VERTICAL_COMPONENT_SPACE));
+		int controlHeight = Math.abs((int)(containerSize.height * CONTROL_PANEL_HEIGHT_FACTOR 
+				- VERTICAL_COMPONENT_SPACE));
+		
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));		
 		setPreferredSize(new Dimension(width, containerSize.height));
 		setSize(getPreferredSize());
@@ -43,9 +50,9 @@ public class TimerMainWindowUI extends JPanel
 		displayPanel.setBorder(BorderFactory.createEtchedBorder());
 		//lTimeRemaining.setPreferredSize(displayPanel.getPreferredSize());
 		//TODO: scale text and monospace it
-		//TODO: support for longer than 99 minutes? ==> or just limit, design decision!
 		//TODO: implement update feature (observer)		
 		
+		lTimeRemaining = new JLabel(TimerModel.getInstance().getTimeRemainingAsString());
 		displayPanel.add(lTimeRemaining);
 		
 		
@@ -66,9 +73,9 @@ public class TimerMainWindowUI extends JPanel
 				new Dimension((int)(width*.3), controlHeight));
 		nextReminderPanel.setMaximumSize(nextReminderPanel.getPreferredSize());
 		
-		JLabel nextReminderLabel = new JLabel("00:00"); 
+		lNextReminder = new JLabel(TimerModel.getInstance().getNextAlertAsString()); 
 		//TODO: scale text, monospace, support design decision from above, implement update
-		nextReminderPanel.add(nextReminderLabel);
+		nextReminderPanel.add(lNextReminder);
 		
 		//buttons
 		JPanel buttonPanel = new JPanel();
@@ -96,7 +103,7 @@ public class TimerMainWindowUI extends JPanel
 		{
 			public void actionPerformed(ActionEvent pEvent)
 			{
-				TimerModel.getInstance().stopAndReset();;
+				TimerModel.getInstance().stopAndReset();
 			}
 		});
 
@@ -109,5 +116,24 @@ public class TimerMainWindowUI extends JPanel
 		//adding everything to the main panel
 		add(displayPanel);
 		add(controlPanel);
+	}
+
+	@Override
+	public void update(Observable o, Object arg) 
+	{
+		String nextReminder = TimerModel.getInstance().getTimeRemainingAsString();
+		if(TimerModel.getInstance().isRunning() && !nextReminder.equals(lTimeRemaining.getText()))
+		{
+			//TODO: trigger alert
+		}
+		//the text might have changed from making a new timer or resetting
+		lTimeRemaining.setText(nextReminder);
+		
+		//If something changed, in almost every scenario the time remaining
+		//has also changed. May as well update it each time
+		lNextReminder.setText(TimerModel.getInstance().getNextAlertAsString());
+		
+		//TODO: if the timer is running and there is currently a start button, change it to pause
+		//TODO: else if the timer is not running and there is currently a pause button, change it to start
 	}
 }

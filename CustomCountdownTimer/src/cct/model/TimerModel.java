@@ -6,6 +6,8 @@ import java.util.Observable;
 
 import javax.swing.Timer;
 
+import cct.exceptions.TimerOverflowException;
+
 /**
  * The model that is used by the GUI to track how much time
  * is remaining and trigger the alerts.
@@ -17,15 +19,17 @@ public class TimerModel extends Observable
 	
 	private CountdownTimer timer;
 	private int timeRemaining;
-	private int currentReminder;
+	private int currentReminderIndex;
 	
 	private Timer cdTimer;
+	private boolean isRunning;
 	
 	private TimerModel()
 	{
 		timer = new CountdownTimer(new TimeInterval());
 		timeRemaining = 0;
-		currentReminder = 0;
+		currentReminderIndex = 0;
+		isRunning = false;
 	}
 	
 	/**
@@ -50,11 +54,13 @@ public class TimerModel extends Observable
 		if(cdTimer.isRunning())
 		{
 			cdTimer.stop();
+			isRunning = false;
 		}
 		
 		timer = aTimer;
 		timeRemaining = aTimer.duration.getTotalTimeInSeconds();
-		//TODO: update the time remaining on GUI
+		setChanged();
+		notifyObservers();
 	}
 	
 	/**
@@ -76,6 +82,7 @@ public class TimerModel extends Observable
 		else if(timeRemaining < timer.duration.getTotalTimeInSeconds())
 		{
 			cdTimer.start();
+			isRunning = true;
 		}
 		
 		//else timer starts from the beginning
@@ -88,10 +95,9 @@ public class TimerModel extends Observable
 				public void actionPerformed(ActionEvent pEvent)
 				{
 					//if the time remaining is the same as the next reminder
-					if(timeRemaining == timer.reminders.get(currentReminder).getTotalTimeInSeconds())
+					if(timeRemaining == timer.reminders.get(currentReminderIndex).getTotalTimeInSeconds())
 					{
-						//TODO: trigger alert
-						currentReminder++; //move to the next reminder
+						currentReminderIndex++; //move to the next reminder
 					}
 					
 					//When the timer reaches 0
@@ -99,14 +105,20 @@ public class TimerModel extends Observable
 					{
 						Timer source = (Timer)pEvent.getSource();
 						source.stop();
-						//TODO: signal pause button to turn back into start button.
-					}
-					
+						isRunning = false;
+					}					
 					timeRemaining--;
+					
+					setChanged();
+					notifyObservers();
 				}
 			});
 			
 			cdTimer.start();
+			isRunning = true;
+			
+			setChanged();
+			notifyObservers();
 		}
 	}
 	
@@ -118,10 +130,13 @@ public class TimerModel extends Observable
 		if(cdTimer.isRunning())
 		{
 			cdTimer.stop();
-			//TODO: signal pause button to turn into start button
+			isRunning = false;
 		}		
 		timeRemaining = timer.duration.getTotalTimeInSeconds();
-		currentReminder = 0;
+		currentReminderIndex = 0;
+		
+		setChanged();
+		notifyObservers();
 	}
 	
 	/**
@@ -131,6 +146,32 @@ public class TimerModel extends Observable
 	public void pause()
 	{
 		cdTimer.stop();
+		isRunning = false;
+		
+		setChanged();
+		notifyObservers();
+	}
+	
+	public String getNextAlertAsString()
+	{
+		return timer.reminders.get(currentReminderIndex).toString();
+	}
+	
+	public boolean isRunning()
+	{
+		return isRunning;
+	}
+	
+	public String getTimeRemainingAsString()
+	{
+		try
+		{
+			TimeInterval ret = new TimeInterval(timeRemaining, 0);
+			return ret.toString();			
+		}
+		catch(TimerOverflowException e)
+		{
+			return "00:00";
+		}
 	}
 }
-
