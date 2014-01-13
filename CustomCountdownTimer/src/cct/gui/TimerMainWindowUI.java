@@ -2,6 +2,7 @@ package cct.gui;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
@@ -124,7 +125,8 @@ public class TimerMainWindowUI extends JPanel implements java.util.Observer
 		String nextReminder = TimerModel.getInstance().getTimeRemainingAsString();
 		if(TimerModel.getInstance().isRunning() && !nextReminder.equals(lTimeRemaining.getText()))
 		{
-			//TODO: trigger alert
+			//TODO: trigger a better alert -- current one is for debug purposes
+			Toolkit.getDefaultToolkit().beep();
 		}
 		//the text might have changed from making a new timer or resetting
 		lTimeRemaining.setText(nextReminder);
