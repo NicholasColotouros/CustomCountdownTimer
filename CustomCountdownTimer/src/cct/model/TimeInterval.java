@@ -1,10 +1,11 @@
 package cct.model;
 
-import java.util.Comparator;
-
 import cct.exceptions.NegativeInputException;
 import cct.exceptions.TimerOverflowException;
 
+/**
+ * A class that simplifies taking in data from the user to construct timers.
+ */
 public class TimeInterval implements Comparable<TimeInterval>
 {
 	private int seconds;

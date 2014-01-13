@@ -5,9 +5,15 @@ import java.util.Collections;
 
 import cct.exceptions.ReminderLongerThanDurationException;
 
-//the model that will be saved, loaded and used when making the timer
 //TODO: implement serializability
-//This is the class to be serialized -- I don't want to serialize when it was stopped
+/**
+ * This is the timer that the model relies on. This is not the model
+ * itself because the model contains properties which do not need
+ * to be serialized.
+ * 
+ * Contains a duration, which will how long the timer counts down
+ * and a list of time intervals for which an alert will be triggered.
+ */
 public class CountdownTimer 
 {
 	protected TimeInterval duration;

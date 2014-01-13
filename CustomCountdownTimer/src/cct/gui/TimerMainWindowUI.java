@@ -96,7 +96,7 @@ public class TimerMainWindowUI extends JPanel
 		{
 			public void actionPerformed(ActionEvent pEvent)
 			{
-				TimerModel.getInstance().stop();
+				TimerModel.getInstance().stopAndReset();;
 			}
 		});
 
