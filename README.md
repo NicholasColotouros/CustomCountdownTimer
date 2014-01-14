@@ -14,4 +14,7 @@ Features left to implement:
 * Main window aesthetics
 
 Possible features to be added down the road:
-* Settings (different alert sounds, option of audio and/or visual)
+* Settings, such as:
+*   Different alert sounds
+*   Otion of audio and/or visual alerts
+*   Different languages
