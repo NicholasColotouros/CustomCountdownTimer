@@ -22,9 +22,15 @@ import cct.model.TimerModel;
 @SuppressWarnings("serial")
 public class TimerMainWindowUI extends JPanel implements java.util.Observer
 {
-	private JLabel lTimeRemaining; //FOR TESTING: USE METHODS
+	//TODO: Optional: find a way for the start button to take up the space 
+	//of the pause button when not visible and vice versa
+	private JLabel lTimeRemaining;
 	private JLabel lNextReminder;
 
+	private JButton startButton;
+	private JButton pauseButton;
+	private JButton stopButton;
+	
 	private static final ResourceBundle STRINGS = CustomCountdownTimerUI.getResourceBundle();
 	
 	private static final double TIMER_PANEL_HEIGHT_FACTOR = .5;
@@ -100,16 +106,36 @@ public class TimerMainWindowUI extends JPanel implements java.util.Observer
 						controlPanel.getPreferredSize().height
 				));
 		//TODO: consider using bag layout so that start button is larger?
-		//TODO: turn start into pause button
-		JButton startButton = new JButton(STRINGS.getString("start"));
-		JButton stopButton = new JButton(STRINGS.getString("stop"));
 		
-		//action listeners for start and stop
+		
+		//TODO: turn start into pause button
+		startButton = new JButton(STRINGS.getString("start"));
+		pauseButton = new JButton(STRINGS.getString("pause"));
+		pauseButton.setVisible(false);
+		stopButton = new JButton(STRINGS.getString("stop"));
+		
+		//action listeners for start, pause and stop
 		startButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent pEvent)
 			{
 				TimerModel.getInstance().start();
+				//If the timer is NOT 00 -- it won't run if it is
+				if(TimerModel.getInstance().isRunning())
+				{
+					startButton.setVisible(false);
+					pauseButton.setVisible(true);
+				}
+			}
+		});
+		
+		pauseButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent pEvent)
+			{
+				TimerModel.getInstance().pause();
+				startButton.setVisible(true);
+				pauseButton.setVisible(false);
 			}
 		});
 		
@@ -118,10 +144,13 @@ public class TimerMainWindowUI extends JPanel implements java.util.Observer
 			public void actionPerformed(ActionEvent pEvent)
 			{
 				TimerModel.getInstance().stopAndReset();
+				startButton.setVisible(true);
+				pauseButton.setVisible(false);
 			}
 		});
 
 		buttonPanel.add(startButton);
+		buttonPanel.add(pauseButton);
 		buttonPanel.add(stopButton);
 		
 		controlPanel.add(nextReminderPanel);
@@ -145,6 +174,12 @@ public class TimerMainWindowUI extends JPanel implements java.util.Observer
 		}
 		//the text might have changed from making a new timer or resetting
 		lTimeRemaining.setText(timeRemaining);
+		
+		if(TimerModel.getInstance().getTimeRemainingInSeconds() == 0)
+		{
+			pauseButton.setVisible(false);
+			startButton.setVisible(true);
+		}
 		
 		//If something changed, in almost every scenario the time remaining
 		//has also changed. May as well update it each time

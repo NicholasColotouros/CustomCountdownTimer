@@ -12,7 +12,6 @@ import cct.exceptions.TimerOverflowException;
  * The model that is used by the GUI to track how much time
  * is remaining and trigger the alerts.
  */
-//TODO: test
 public class TimerModel extends Observable
 {
 	private static TimerModel INSTANCE;
@@ -91,6 +90,7 @@ public class TimerModel extends Observable
 		
 		timer = aTimer;
 		timeRemaining = aTimer.duration.getTotalTimeInSeconds();
+		currentReminderIndex = 0;
 		setChanged();
 		notifyObservers();
 	}
@@ -100,7 +100,7 @@ public class TimerModel extends Observable
 	 */
 	public void start()
 	{
-		//do nothing if there is no time remaining
+		//do nothing if there is no time remaining in the original timer
 		if(timer.duration.getTotalTimeInSeconds() == 0) return; 
 		
 		//if the timer has ended and start button pressed
@@ -153,6 +153,11 @@ public class TimerModel extends Observable
 	public boolean isRunning()
 	{
 		return cdTimer.isRunning();
+	}
+	
+	public int getTimeRemainingInSeconds()
+	{
+		return timeRemaining;
 	}
 	
 	public String getTimeRemainingAsString()
