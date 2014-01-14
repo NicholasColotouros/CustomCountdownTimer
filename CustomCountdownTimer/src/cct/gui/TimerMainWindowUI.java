@@ -22,13 +22,10 @@ import cct.model.TimerModel;
 @SuppressWarnings("serial")
 public class TimerMainWindowUI extends JPanel implements java.util.Observer
 {
-	//TODO: Optional: find a way for the start button to take up the space 
-	//of the pause button when not visible and vice versa
 	private JLabel lTimeRemaining;
 	private JLabel lNextReminder;
 
 	private JButton startButton;
-	private JButton pauseButton;
 	private JButton stopButton;
 	
 	private static final ResourceBundle STRINGS = CustomCountdownTimerUI.getResourceBundle();
@@ -108,49 +105,24 @@ public class TimerMainWindowUI extends JPanel implements java.util.Observer
 		//TODO: consider using bag layout so that start button is larger?
 		
 		
-		//TODO: turn start into pause button
+		//TODO: Pause button currently makes the button larger. Resizes with every change.
+		//Stop this from happenning.
 		startButton = new JButton(STRINGS.getString("start"));
-		pauseButton = new JButton(STRINGS.getString("pause"));
-		pauseButton.setVisible(false);
 		stopButton = new JButton(STRINGS.getString("stop"));
 		
 		//action listeners for start, pause and stop
-		startButton.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent pEvent)
-			{
-				TimerModel.getInstance().start();
-				//If the timer is NOT 00 -- it won't run if it is
-				if(TimerModel.getInstance().isRunning())
-				{
-					startButton.setVisible(false);
-					pauseButton.setVisible(true);
-				}
-			}
-		});
-		
-		pauseButton.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent pEvent)
-			{
-				TimerModel.getInstance().pause();
-				startButton.setVisible(true);
-				pauseButton.setVisible(false);
-			}
-		});
+		startButton.addActionListener(createStartActionListener());
 		
 		stopButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent pEvent)
 			{
 				TimerModel.getInstance().stopAndReset();
-				startButton.setVisible(true);
-				pauseButton.setVisible(false);
+				showStartButton();
 			}
 		});
 
 		buttonPanel.add(startButton);
-		buttonPanel.add(pauseButton);
 		buttonPanel.add(stopButton);
 		
 		controlPanel.add(nextReminderPanel);
@@ -159,6 +131,50 @@ public class TimerMainWindowUI extends JPanel implements java.util.Observer
 		//adding everything to the main panel
 		add(displayPanel);
 		add(controlPanel);
+	}
+	
+	private void showStartButton()
+	{
+		startButton.setText(STRINGS.getString("start"));
+		ActionListener alArray[] = startButton.getActionListeners();
+		startButton.removeActionListener(alArray[0]);
+		startButton.addActionListener(createStartActionListener());		
+	}
+	
+	private void showPauseButton()
+	{
+		startButton.setText(STRINGS.getString("pause"));
+		ActionListener alArray[] = startButton.getActionListeners();
+		startButton.removeActionListener(alArray[0]);
+		startButton.addActionListener(createPauseActionListener());
+	}
+	
+	private ActionListener createPauseActionListener()
+	{
+		return new ActionListener()
+		{
+			public void actionPerformed(ActionEvent pEvent)
+			{
+				TimerModel.getInstance().pause();
+				showStartButton();
+			}
+		};
+	}
+	
+	private ActionListener createStartActionListener()
+	{
+		return new ActionListener()
+		{
+			public void actionPerformed(ActionEvent pEvent)
+			{
+				TimerModel.getInstance().start();
+				//If the timer is NOT 00 -- it won't run if it is
+				if(TimerModel.getInstance().isRunning())
+				{
+					showPauseButton();
+				}
+			}
+		};
 	}
 
 	@Override
@@ -177,15 +193,11 @@ public class TimerMainWindowUI extends JPanel implements java.util.Observer
 		
 		if(TimerModel.getInstance().getTimeRemainingInSeconds() == 0)
 		{
-			pauseButton.setVisible(false);
-			startButton.setVisible(true);
+			showStartButton();
 		}
 		
 		//If something changed, in almost every scenario the time remaining
 		//has also changed. May as well update it each time
-		lNextReminder.setText(TimerModel.getInstance().getNextAlertAsString());
-		
-		//TODO: if the timer is running and there is currently a start button, change it to pause
-		//TODO: else if the timer is not running and there is currently a pause button, change it to start
+		lNextReminder.setText(TimerModel.getInstance().getNextAlertAsString());		
 	}
 }
