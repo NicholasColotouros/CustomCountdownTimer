@@ -25,7 +25,6 @@ public class TimerMainWindowUI extends JPanel implements java.util.Observer
 	private JLabel lTimeRemaining; //FOR TESTING: USE METHODS
 	private JLabel lNextReminder;
 
-	
 	private static final ResourceBundle STRINGS = CustomCountdownTimerUI.getResourceBundle();
 	
 	private static final double TIMER_PANEL_HEIGHT_FACTOR = .5;
@@ -45,9 +44,10 @@ public class TimerMainWindowUI extends JPanel implements java.util.Observer
 			reminders.add(new TimeInterval(25,1));
 			reminders.add(new TimeInterval(0,1));
 			System.out.println("here");
-			TimerModel.getInstance().setTimer(new CountdownTimer(duration, reminders));
+			TimerModel TIMER_INSTANCE = TimerModel.getInstance();
+			TIMER_INSTANCE.setTimer(new CountdownTimer(duration, reminders));
 			System.out.println("timerModel set");
-		}catch(Exception e){System.out.println(e.toString());}
+		}catch(Exception e){e.printStackTrace();}
 		
 		//END DEBUG
 		

@@ -15,7 +15,7 @@ import cct.exceptions.TimerOverflowException;
 //TODO: test
 public class TimerModel extends Observable
 {
-	private static final TimerModel INSTANCE = new TimerModel();
+	private static TimerModel INSTANCE;
 	
 	private CountdownTimer timer;
 	private int timeRemaining;
@@ -24,13 +24,43 @@ public class TimerModel extends Observable
 	private Timer cdTimer;
 	private boolean isRunning;
 	
-	//TODO: fix bug in initiation of singleton
 	private TimerModel()
 	{
 		timer = new CountdownTimer(new TimeInterval());
 		timeRemaining = 0;
 		currentReminderIndex = 0;
 		isRunning = false;
+		int delay = 1000; //milliseconds
+		cdTimer = new Timer(delay, new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent pEvent)
+			{
+				//if the time remaining is the same as the next reminder
+				if(timeRemaining == timer.reminders.get(currentReminderIndex).getTotalTimeInSeconds())
+				{
+					currentReminderIndex++; //move to the next reminder
+				}
+				
+				//When the timer reaches 0
+				if(timeRemaining == 0)
+				{
+					Timer source = (Timer)pEvent.getSource();
+					source.stop();
+					isRunning = false;
+				}					
+				timeRemaining--;
+				
+				setChanged();
+				notifyObservers();
+			}
+		});
+		
+		cdTimer.start();
+		isRunning = true;
+		
+		setChanged();
+		notifyObservers();
 	}
 	
 	/**
@@ -40,6 +70,7 @@ public class TimerModel extends Observable
 	 */
 	public static TimerModel getInstance()
 	{
+		if(INSTANCE == null) INSTANCE = new TimerModel();
 		return INSTANCE;
 	}
 	
@@ -89,37 +120,7 @@ public class TimerModel extends Observable
 		//else timer starts from the beginning
 		else
 		{
-			int delay = 1000; //milliseconds
-			cdTimer = new Timer(delay, new ActionListener()
-			{
-				@Override
-				public void actionPerformed(ActionEvent pEvent)
-				{
-					//if the time remaining is the same as the next reminder
-					if(timeRemaining == timer.reminders.get(currentReminderIndex).getTotalTimeInSeconds())
-					{
-						currentReminderIndex++; //move to the next reminder
-					}
-					
-					//When the timer reaches 0
-					if(timeRemaining == 0)
-					{
-						Timer source = (Timer)pEvent.getSource();
-						source.stop();
-						isRunning = false;
-					}					
-					timeRemaining--;
-					
-					setChanged();
-					notifyObservers();
-				}
-			});
-			
-			cdTimer.start();
-			isRunning = true;
-			
-			setChanged();
-			notifyObservers();
+			cdTimer.restart();
 		}
 	}
 	
