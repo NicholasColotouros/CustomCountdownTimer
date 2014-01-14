@@ -22,14 +22,12 @@ public class TimerModel extends Observable
 	private int currentReminderIndex;
 	
 	private Timer cdTimer;
-	private boolean isRunning;
 	
 	private TimerModel()
 	{
 		timer = new CountdownTimer(new TimeInterval());
 		timeRemaining = 0;
 		currentReminderIndex = 0;
-		isRunning = false;
 		int delay = 1000; //milliseconds
 		cdTimer = new Timer(delay, new ActionListener()
 		{
@@ -47,7 +45,6 @@ public class TimerModel extends Observable
 				{
 					Timer source = (Timer)pEvent.getSource();
 					source.stop();
-					isRunning = false;
 				}					
 				timeRemaining--;
 				
@@ -57,7 +54,6 @@ public class TimerModel extends Observable
 		});
 		
 		cdTimer.start();
-		isRunning = true;
 		
 		setChanged();
 		notifyObservers();
@@ -86,7 +82,6 @@ public class TimerModel extends Observable
 		if(cdTimer.isRunning())
 		{
 			cdTimer.stop();
-			isRunning = false;
 		}
 		
 		timer = aTimer;
@@ -114,7 +109,6 @@ public class TimerModel extends Observable
 		else if(timeRemaining < timer.duration.getTotalTimeInSeconds())
 		{
 			cdTimer.start();
-			isRunning = true;
 		}
 		
 		//else timer starts from the beginning
@@ -132,7 +126,6 @@ public class TimerModel extends Observable
 		if(cdTimer.isRunning())
 		{
 			cdTimer.stop();
-			isRunning = false;
 		}		
 		timeRemaining = timer.duration.getTotalTimeInSeconds();
 		currentReminderIndex = 0;
@@ -148,7 +141,6 @@ public class TimerModel extends Observable
 	public void pause()
 	{
 		cdTimer.stop();
-		isRunning = false;
 		
 		setChanged();
 		notifyObservers();
@@ -161,7 +153,7 @@ public class TimerModel extends Observable
 	
 	public boolean isRunning()
 	{
-		return isRunning;
+		return cdTimer.isRunning();
 	}
 	
 	public String getTimeRemainingAsString()

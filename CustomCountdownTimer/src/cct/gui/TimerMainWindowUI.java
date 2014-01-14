@@ -141,14 +141,17 @@ public class TimerMainWindowUI extends JPanel implements java.util.Observer
 	@Override
 	public void update(Observable o, Object arg) 
 	{
-		String nextReminder = TimerModel.getInstance().getTimeRemainingAsString();
-		if(TimerModel.getInstance().isRunning() && !nextReminder.equals(lTimeRemaining.getText()))
+		String timeRemaining = TimerModel.getInstance().getTimeRemainingAsString();
+		String nextReminder = TimerModel.getInstance().getNextAlertAsString();
+		
+		if(TimerModel.getInstance().isRunning() & timeRemaining.equals(nextReminder))
 		{
 			//TODO: trigger a better alert -- current one is for debug purposes
+			System.out.println("it happened");
 			Toolkit.getDefaultToolkit().beep();
 		}
 		//the text might have changed from making a new timer or resetting
-		lTimeRemaining.setText(nextReminder);
+		lTimeRemaining.setText(timeRemaining);
 		
 		//If something changed, in almost every scenario the time remaining
 		//has also changed. May as well update it each time
