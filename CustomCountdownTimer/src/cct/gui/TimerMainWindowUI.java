@@ -64,9 +64,7 @@ public class TimerMainWindowUI extends JPanel implements java.util.Observer
 		displayPanel.setPreferredSize(new Dimension(width, timerHeight));
 		displayPanel.setMaximumSize(displayPanel.getPreferredSize());
 		displayPanel.setBorder(BorderFactory.createEtchedBorder());
-		//lTimeRemaining.setPreferredSize(displayPanel.getPreferredSize());
 		//TODO: scale text and monospace it
-		//TODO: implement update feature (observer)		
 		
 		lTimeRemaining = new JLabel(TimerModel.getInstance().getTimeRemainingAsString());
 		displayPanel.add(lTimeRemaining);

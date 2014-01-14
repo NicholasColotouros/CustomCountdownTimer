@@ -109,19 +109,12 @@ public class TimerModel extends Observable
 		{
 			timeRemaining = timer.duration.getTotalTimeInSeconds();
 			currentReminderIndex = 0;
-		}
-		
-		//else if the timer didn't finish, continue from where it left off
-		else if(timeRemaining < timer.duration.getTotalTimeInSeconds())
-		{
-			cdTimer.start();
-		}
-		
-		//else timer starts from the beginning
-		else
-		{
 			cdTimer.restart();
+			
+			setChanged();
+			notifyObservers();
 		}
+		cdTimer.start();
 	}
 	
 	/**
