@@ -15,6 +15,6 @@ Features left to implement:
 
 Possible features to be added down the road:
 * Settings, such as:
-*   Different alert sounds
-*   Otion of audio and/or visual alerts
-*   Different languages
+    * Different alert sounds
+    * Option of audio and/or visual alerts
+    * Different languages
