@@ -10,7 +10,6 @@ Features left to implement:
 * User input from GUI
 * Main Window aesthetics/nicer look
 * Saving/loading
-* Start button turning into pause button when the timer is running
 * Main window aesthetics
 
 Possible features to be added down the road:
