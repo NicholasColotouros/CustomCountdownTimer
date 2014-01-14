@@ -35,7 +35,9 @@ public class TimerModel extends Observable
 			public void actionPerformed(ActionEvent pEvent)
 			{
 				//if the time remaining is the same as the next reminder
-				if(timeRemaining == timer.reminders.get(currentReminderIndex).getTotalTimeInSeconds())
+				//and it has another index to look at
+				if(timeRemaining == timer.reminders.get(currentReminderIndex).getTotalTimeInSeconds()
+						& currentReminderIndex+1 < timer.reminders.size())
 				{
 					currentReminderIndex++; //move to the next reminder
 				}
@@ -45,8 +47,11 @@ public class TimerModel extends Observable
 				{
 					Timer source = (Timer)pEvent.getSource();
 					source.stop();
-				}					
-				timeRemaining--;
+				}
+				if(timeRemaining > 0)
+				{
+					timeRemaining--;					
+				}
 				
 				setChanged();
 				notifyObservers();
@@ -103,6 +108,7 @@ public class TimerModel extends Observable
 		if(timeRemaining == 0)
 		{
 			timeRemaining = timer.duration.getTotalTimeInSeconds();
+			currentReminderIndex = 0;
 		}
 		
 		//else if the timer didn't finish, continue from where it left off

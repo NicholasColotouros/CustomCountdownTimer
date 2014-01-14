@@ -37,16 +37,12 @@ public class TimerMainWindowUI extends JPanel implements java.util.Observer
 		//TODO: remove this debug code
 		try
 		{
-			TimeInterval duration = new TimeInterval(30,1);
+			TimeInterval duration = new TimeInterval(11,0);
 			ArrayList<TimeInterval> reminders = new ArrayList<TimeInterval>();
 			reminders.add(new TimeInterval(10,0));
-			reminders.add(new TimeInterval(10,1));
-			reminders.add(new TimeInterval(25,1));
-			reminders.add(new TimeInterval(0,1));
-			System.out.println("here");
+			reminders.add(new TimeInterval(1,0));
 			TimerModel TIMER_INSTANCE = TimerModel.getInstance();
 			TIMER_INSTANCE.setTimer(new CountdownTimer(duration, reminders));
-			System.out.println("timerModel set");
 		}catch(Exception e){e.printStackTrace();}
 		
 		//END DEBUG
@@ -147,7 +143,6 @@ public class TimerMainWindowUI extends JPanel implements java.util.Observer
 		if(TimerModel.getInstance().isRunning() & timeRemaining.equals(nextReminder))
 		{
 			//TODO: trigger a better alert -- current one is for debug purposes
-			System.out.println("it happened");
 			Toolkit.getDefaultToolkit().beep();
 		}
 		//the text might have changed from making a new timer or resetting
