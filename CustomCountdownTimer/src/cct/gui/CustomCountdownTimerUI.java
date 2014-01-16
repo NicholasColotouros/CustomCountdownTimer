@@ -33,13 +33,20 @@ public class CustomCountdownTimerUI extends JFrame
 	private static final String TITLE = "Countdown Timer";
 	private static final double FRAME_HEIGHT_FACTOR = 0.4;
 	private static final double FRAME_WIDTH_FACTOR = 0.2;
-
+	
 	/**
 	 * The main constructor for the application
 	 */
 	private CustomCountdownTimerUI()
 	{
 		super(TITLE);
+		
+		Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+		setSize(
+					(int) Math.round(screenSize.width * FRAME_WIDTH_FACTOR), 
+					(int) Math.round(screenSize.height * FRAME_HEIGHT_FACTOR)
+				);
+		setPreferredSize(getSize());
 		
 		//Menu options
 		final JMenuBar menuBar = new JMenuBar();
@@ -78,8 +85,7 @@ public class CustomCountdownTimerUI extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent pEvent)
 			{
-				new TimerSetupWindow();
-				//TODO: have timer refresh afterwards
+				new TimerSetupWindow(getPreferredSize());
 			}
 		});
 		
@@ -102,12 +108,6 @@ public class CustomCountdownTimerUI extends JFrame
 		});
 				
 		setJMenuBar(menuBar);
-		
-		Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-		setSize(
-					(int) Math.round(screenSize.width * FRAME_WIDTH_FACTOR), 
-					(int) Math.round(screenSize.height * FRAME_HEIGHT_FACTOR)
-				);
 		//END MENU BAR CONSTRUCTION
 		
 		
