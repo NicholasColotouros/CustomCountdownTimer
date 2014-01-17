@@ -1,15 +1,20 @@
 package cct.gui;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import cct.model.TimerModel;
 
 
 @SuppressWarnings("serial")
@@ -66,8 +71,40 @@ public class TimerSetupWindow extends JDialog
 		//TODO: bottom: interval setting
 		//have it read from the model and have the current setting pre-loaded
 		
+		
+		//OK and CANCEL buttons that are at the bottom of window
+		//TODO: fix sizes of the buttons
+		JButton okButton = new JButton(STRINGS.getString("ok"));
+		JButton cancelButton = new JButton(STRINGS.getString("cancel"));
+		
+		//ActionListeners for the two buttons
+		okButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent pEvent)
+			{
+				//TODO: set the timer and close it
+				//TimerModel.getInstance().setTimer(/*ARGUMENTS*/);
+				
+				setVisible(false);
+			}
+		});
+		
+		cancelButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent pEvent)
+			{
+				setVisible(false);
+			}
+		});
+		
+		
 		add(durationPanel);
+		add(cancelButton);
+		add(okButton);
 		setVisible(true);
+		
 		
 	}
 }
