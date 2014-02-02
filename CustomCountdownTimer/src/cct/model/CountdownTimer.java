@@ -14,7 +14,7 @@ import cct.exceptions.ReminderLongerThanDurationException;
  * Contains a duration, which will how long the timer counts down
  * and a list of time intervals for which an alert will be triggered.
  */
-public class CountdownTimer 
+public class CountdownTimer
 {
 	public TimeInterval duration;
 	public ArrayList<TimeInterval> reminders;
@@ -69,5 +69,8 @@ public class CountdownTimer
 		}
 		
 		reminders = pReminders;
-	}	
+	}
+	
+//	public void save(String path) throws storageException;
+	//public void load(String path) throws storageException;
 }

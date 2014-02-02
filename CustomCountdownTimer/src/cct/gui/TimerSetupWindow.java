@@ -25,8 +25,10 @@ public class TimerSetupWindow extends JDialog
 	private static final int TEXT_FIELD_SIZE = 3;
 	private static final int MAX_TEXT_FIELD_INPUT = 2;
 	
-	private JFormattedTextField secondsField = new JFormattedTextField();	
-	private JFormattedTextField minutesField = new JFormattedTextField();
+	private static final int SPACER_SIZE = 15;
+	
+	private JFormattedTextField secondsField;	
+	private JFormattedTextField minutesField;
 	
 	private NumberFormat timeFormat;
 	
@@ -44,14 +46,15 @@ public class TimerSetupWindow extends JDialog
 		//TODO: formatted text doesn't work
 		
 		int currentHeight = getSize().height;
-		minutesField.setSize(new Dimension(50, currentHeight));
-		minutesField.setPreferredSize(new Dimension(10, currentHeight));
+		minutesField = new JFormattedTextField(timeFormat);
+		secondsField = new JFormattedTextField(timeFormat);
 		
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
 		
 		//TODO: DurationPanel -> input how long
 		JPanel durationPanel = new JPanel();
+		durationPanel.setLayout(new BoxLayout(durationPanel, BoxLayout.PAGE_AXIS));
 		durationPanel.setBorder(BorderFactory.createTitledBorder(STRINGS.getString("timer_settings")));
 		
 		JLabel instructionLabel = new JLabel(STRINGS.getString("timer_settings2"));
@@ -77,6 +80,12 @@ public class TimerSetupWindow extends JDialog
 		JButton okButton = new JButton(STRINGS.getString("ok"));
 		JButton cancelButton = new JButton(STRINGS.getString("cancel"));
 		
+		JPanel confirmationContainer = new JPanel();
+		//TODO set preferred size
+		confirmationContainer.add(okButton);
+		confirmationContainer.add(javax.swing.Box.createVerticalStrut(SPACER_SIZE));
+		confirmationContainer.add(cancelButton);
+		
 		//ActionListeners for the two buttons
 		okButton.addActionListener(new ActionListener()
 		{
@@ -101,8 +110,7 @@ public class TimerSetupWindow extends JDialog
 		
 		
 		add(durationPanel);
-		add(cancelButton);
-		add(okButton);
+//		add(confirmationContainer);
 		setVisible(true);
 		
 		
