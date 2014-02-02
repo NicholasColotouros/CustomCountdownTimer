@@ -17,3 +17,5 @@ Possible features to be added down the road:
     * Different alert sounds
     * Option of audio and/or visual alerts
     * Different languages
+
+You can download the current build as a runnable jar file from here: https://www.dropbox.com/s/nao3mgjd9x79hwb/CCT.jar
