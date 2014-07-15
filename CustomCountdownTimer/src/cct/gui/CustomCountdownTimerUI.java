@@ -21,8 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 @SuppressWarnings("serial")
-public class CustomCountdownTimerUI extends JFrame
-{
+public class CustomCountdownTimerUI extends JFrame{
 	public static final String RESOURCE_BUNDLE_NAME = "CCT_EN_CA";
 	public static final Locale LOCALE = Locale.CANADA;
 	
@@ -37,8 +36,7 @@ public class CustomCountdownTimerUI extends JFrame
 	/**
 	 * The main constructor for the application
 	 */
-	private CustomCountdownTimerUI()
-	{
+	private CustomCountdownTimerUI(){
 		super(TITLE);
 		
 		Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
@@ -80,29 +78,23 @@ public class CustomCountdownTimerUI extends JFrame
 		helpMenu.add(aboutMenu);
 		menuBar.add(helpMenu);
 		
-		newTimer.addActionListener(new ActionListener()
-		{
+		newTimer.addActionListener(new ActionListener(){
 			@Override
-			public void actionPerformed(ActionEvent pEvent)
-			{
+			public void actionPerformed(ActionEvent pEvent){
 				new TimerSetupWindow(getPreferredSize());
 			}
 		});
 		
-		exit.addActionListener(new ActionListener()
-		{
+		exit.addActionListener(new ActionListener(){
 			@Override
-			public void actionPerformed(ActionEvent pEvent)
-			{
+			public void actionPerformed(ActionEvent pEvent){
 				MAIN_WINDOW.dispatchEvent(new WindowEvent(MAIN_WINDOW, WindowEvent.WINDOW_CLOSING));
 			}
 		});
 		
-		aboutMenu.addActionListener(new ActionListener()
-		{
+		aboutMenu.addActionListener(new ActionListener(){
 			@Override
-			public void actionPerformed(ActionEvent pEvent)
-			{
+			public void actionPerformed(ActionEvent pEvent){
 				JOptionPane.showMessageDialog(CustomCountdownTimerUI.this, STRINGS.getString("about_text"));
 			}
 		});
@@ -116,11 +108,9 @@ public class CustomCountdownTimerUI extends JFrame
 		add(buildUI(screenSize));
 		
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		addWindowListener(new WindowAdapter()
-		{
+		addWindowListener(new WindowAdapter(){
 			@Override 
-			public void windowClosing(WindowEvent e)
-			{
+			public void windowClosing(WindowEvent e){
 				Object[] options = { 
 						STRINGS.getString("yes"),
 						STRINGS.getString("no"),
@@ -138,8 +128,7 @@ public class CustomCountdownTimerUI extends JFrame
 						options, 
 						options[2]);
 				
-				if(n == 0) //yes is selected
-				{
+				if(n == 0){ //yes is selected
 					//TODO: bring up save, then close program
 				}
 				
@@ -155,8 +144,7 @@ public class CustomCountdownTimerUI extends JFrame
 	/**
 	 * Constructs the part of the window that isn't the menu bar
 	 */
-	private JPanel buildUI(Dimension screenSize)
-	{
+	private JPanel buildUI(Dimension screenSize){
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
 		
@@ -169,17 +157,14 @@ public class CustomCountdownTimerUI extends JFrame
 		return mainPanel;
 	}
 	
-	public static ResourceBundle getResourceBundle()
-	{
+	public static ResourceBundle getResourceBundle(){
 		return STRINGS;
 	}
 	
-	public static void main(String[] pArgs) 
-	{
+	public static void main(String[] pArgs) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
-			public void run() 
-			{
+			public void run() {
 				MAIN_WINDOW = new CustomCountdownTimerUI();	
 				MAIN_WINDOW.setVisible(true);
 			}

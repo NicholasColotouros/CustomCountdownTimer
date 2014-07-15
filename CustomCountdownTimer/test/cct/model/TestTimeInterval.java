@@ -7,13 +7,10 @@ import org.junit.Test;
 import cct.exceptions.NegativeInputException;
 import cct.exceptions.TimerOverflowException;
 
-public class TestTimeInterval 
-{	
+public class TestTimeInterval {
 	@Test
-	public void testTimeInterval()
-	{
-		try
-		{
+	public void testTimeInterval(){
+		try{
 			TimeInterval simpleInterval = new TimeInterval(1, 2);
 			assertTrue(simpleInterval.getMinutes() == 2);
 			assertTrue(simpleInterval.getSeconds() == 1);
@@ -25,20 +22,17 @@ public class TestTimeInterval
 	}
 	
 	@Test
-	public void testBadTimeInterval()
-	{
-		try
-		{
+	public void testBadTimeInterval(){
+		try{
 			TimeInterval badInterval = new TimeInterval(-1, 0);
 		}
 		catch(NegativeInputException e){}
 		catch(TimerOverflowException e){fail();}
-		try
-		{
+		
+		try{
 			TimeInterval badInterval2 = new TimeInterval(0, -1);
 		}
 		catch(NegativeInputException e){}
 		catch(TimerOverflowException e){fail();}
-
 	}
 }

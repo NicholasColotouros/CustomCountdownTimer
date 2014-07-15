@@ -12,8 +12,7 @@ import cct.exceptions.TimerOverflowException;
  * The model that is used by the GUI to track how much time
  * is remaining and trigger the alerts.
  */
-public class TimerModel extends Observable
-{
+public class TimerModel extends Observable{
 	private static TimerModel INSTANCE;
 	
 	private CountdownTimer timer;
@@ -22,33 +21,28 @@ public class TimerModel extends Observable
 	
 	private Timer cdTimer;
 	
-	private TimerModel()
-	{
+	private TimerModel(){
 		timer = new CountdownTimer(new TimeInterval());
 		timeRemaining = 0;
 		currentReminderIndex = 0;
 		int delay = 1000; //milliseconds
-		cdTimer = new Timer(delay, new ActionListener()
-		{
+		cdTimer = new Timer(delay, new ActionListener(){
 			@Override
-			public void actionPerformed(ActionEvent pEvent)
-			{
+			public void actionPerformed(ActionEvent pEvent){
 				//if the time remaining is the same as the next reminder
 				//and it has another index to look at
 				if(timeRemaining == timer.reminders.get(currentReminderIndex).getTotalTimeInSeconds()
-						& currentReminderIndex+1 < timer.reminders.size())
-				{
+						& currentReminderIndex+1 < timer.reminders.size()){
 					currentReminderIndex++; //move to the next reminder
 				}
 				
 				//When the timer reaches 0
-				if(timeRemaining == 0)
-				{
+				if(timeRemaining == 0){
 					Timer source = (Timer)pEvent.getSource();
 					source.stop();
 				}
-				if(timeRemaining > 0)
-				{
+				
+				if(timeRemaining > 0){
 					timeRemaining--;					
 				}
 				
@@ -68,8 +62,7 @@ public class TimerModel extends Observable
 	 * 
 	 * @return the instance of TimerModel.
 	 */
-	public static TimerModel getInstance()
-	{
+	public static TimerModel getInstance(){
 		if(INSTANCE == null) INSTANCE = new TimerModel();
 		return INSTANCE;
 	}
@@ -81,10 +74,8 @@ public class TimerModel extends Observable
 	 * @param aTimer The timer to be used. This will likely
 	 * have been given by the user from the GUI.
 	 */
-	public void setTimer(CountdownTimer aTimer)
-	{
-		if(cdTimer.isRunning())
-		{
+	public void setTimer(CountdownTimer aTimer){
+		if(cdTimer.isRunning()){
 			cdTimer.stop();
 		}
 		
@@ -98,15 +89,13 @@ public class TimerModel extends Observable
 	/**
 	 * Starts the timer as specified by the user.
 	 */
-	public void start()
-	{
+	public void start(){
 		//do nothing if there is no time remaining in the original timer
 		if(timer.duration.getTotalTimeInSeconds() == 0) return; 
 		
 		//if the timer has ended and start button pressed
 		//reset the timer and start again
-		if(timeRemaining == 0)
-		{
+		if(timeRemaining == 0){
 			timeRemaining = timer.duration.getTotalTimeInSeconds();
 			currentReminderIndex = 0;
 			cdTimer.restart();
@@ -120,10 +109,8 @@ public class TimerModel extends Observable
 	/**
 	 * Stops the timer if it is running and resets it.
 	 */
-	public void stopAndReset()
-	{
-		if(cdTimer.isRunning())
-		{
+	public void stopAndReset(){
+		if(cdTimer.isRunning()){
 			cdTimer.stop();
 		}		
 		timeRemaining = timer.duration.getTotalTimeInSeconds();
@@ -137,38 +124,31 @@ public class TimerModel extends Observable
 	 * Pauses the timer. When the timer is resumed it will
 	 * pick up where it left off.
 	 */
-	public void pause()
-	{
+	public void pause(){
 		cdTimer.stop();
 		
 		setChanged();
 		notifyObservers();
 	}
 	
-	public String getNextAlertAsString()
-	{
+	public String getNextAlertAsString(){
 		return timer.reminders.get(currentReminderIndex).toString();
 	}
 	
-	public boolean isRunning()
-	{
+	public boolean isRunning(){
 		return cdTimer.isRunning();
 	}
 	
-	public int getTimeRemainingInSeconds()
-	{
+	public int getTimeRemainingInSeconds(){
 		return timeRemaining;
 	}
 	
-	public String getTimeRemainingAsString()
-	{
-		try
-		{
+	public String getTimeRemainingAsString(){
+		try{
 			TimeInterval ret = new TimeInterval(timeRemaining, 0);
 			return ret.toString();			
 		}
-		catch(TimerOverflowException e)
-		{
+		catch(TimerOverflowException e){
 			return "00:00";
 		}
 	}

@@ -14,8 +14,7 @@ import cct.exceptions.ReminderLongerThanDurationException;
  * Contains a duration, which will how long the timer counts down
  * and a list of time intervals for which an alert will be triggered.
  */
-public class CountdownTimer
-{
+public class CountdownTimer{
 	public TimeInterval duration;
 	public ArrayList<TimeInterval> reminders;
 	
@@ -23,8 +22,7 @@ public class CountdownTimer
 	 * Constructor for when there are no defined reminders.
 	 * @param pDuration how long the timer will be counting down once started.
 	 */
-	public CountdownTimer(TimeInterval pDuration)
-	{
+	public CountdownTimer(TimeInterval pDuration){
 		duration = pDuration;
 		reminders = new ArrayList<TimeInterval>();
 		reminders.add(new TimeInterval());
@@ -35,36 +33,30 @@ public class CountdownTimer
 	 * @param pReminders list of times for when the timer will alert the user.
 	 */
 	public CountdownTimer(TimeInterval pDuration, ArrayList<TimeInterval> pReminders) 
-			throws ReminderLongerThanDurationException
-	{
+			throws ReminderLongerThanDurationException{
 		duration = pDuration;
 		Collections.sort(pReminders);
 
 		//removes duplicates
 		java.util.Stack<Integer> deletionStack = new java.util.Stack<Integer>();
-		for(int i = 0; i < pReminders.size()-1; i++)
-		{
-			if(pReminders.get(i).getTotalTimeInSeconds() == pReminders.get(i).getTotalTimeInSeconds())
-			{
+		for(int i = 0; i < pReminders.size()-1; i++){
+			if(pReminders.get(i).getTotalTimeInSeconds() == pReminders.get(i).getTotalTimeInSeconds()){
 				deletionStack.push(i);
 			}
 		}
 		
-		while(!deletionStack.isEmpty())
-		{
+		while(!deletionStack.isEmpty()){
 			pReminders.remove(deletionStack.pop());
 		}
 		
 		//adds 00:00 if not already in the list
-		if(pReminders.get(pReminders.size()-1).getTotalTimeInSeconds() != 0)
-		{
+		if(pReminders.get(pReminders.size()-1).getTotalTimeInSeconds() != 0){
 			pReminders.add(new TimeInterval());
 		}
 		
 		//if the first reminder (which would be the one with the longest time in seconds)
 		//is greater than the length of the timer itself, throw an exception
-		if(pReminders.get(0).getTotalTimeInSeconds() >= pDuration.getTotalTimeInSeconds())
-		{
+		if(pReminders.get(0).getTotalTimeInSeconds() >= pDuration.getTotalTimeInSeconds()){
 			throw new ReminderLongerThanDurationException();
 		}
 		

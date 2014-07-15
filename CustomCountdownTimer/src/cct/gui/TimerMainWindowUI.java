@@ -20,8 +20,7 @@ import cct.model.TimeInterval;
 import cct.model.TimerModel;
 
 @SuppressWarnings("serial")
-public class TimerMainWindowUI extends JPanel implements java.util.Observer
-{
+public class TimerMainWindowUI extends JPanel implements java.util.Observer{
 	private JLabel lTimeRemaining;
 	private JLabel lNextReminder;
 
@@ -35,11 +34,9 @@ public class TimerMainWindowUI extends JPanel implements java.util.Observer
 	private static final int HORIZONTAL_COMPONENT_SPACE = 25;
 	private static final int VERTICAL_COMPONENT_SPACE = 80;
 	
-	public TimerMainWindowUI(Dimension containerSize)
-	{
+	public TimerMainWindowUI(Dimension containerSize){
 		//TODO: remove this debug code
-		try
-		{
+		try{
 			TimeInterval duration = new TimeInterval(11,0);
 			ArrayList<TimeInterval> reminders = new ArrayList<TimeInterval>();
 			reminders.add(new TimeInterval(10,0));
@@ -113,10 +110,8 @@ public class TimerMainWindowUI extends JPanel implements java.util.Observer
 		//action listeners for start, pause and stop
 		startButton.addActionListener(createStartActionListener());
 		
-		stopButton.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent pEvent)
-			{
+		stopButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent pEvent){
 				TimerModel.getInstance().stopAndReset();
 				showStartButton();
 			}
@@ -133,44 +128,35 @@ public class TimerMainWindowUI extends JPanel implements java.util.Observer
 		add(controlPanel);
 	}
 	
-	private void showStartButton()
-	{
+	private void showStartButton(){
 		startButton.setText(STRINGS.getString("start"));
 		ActionListener alArray[] = startButton.getActionListeners();
 		startButton.removeActionListener(alArray[0]);
 		startButton.addActionListener(createStartActionListener());		
 	}
 	
-	private void showPauseButton()
-	{
+	private void showPauseButton(){
 		startButton.setText(STRINGS.getString("pause"));
 		ActionListener alArray[] = startButton.getActionListeners();
 		startButton.removeActionListener(alArray[0]);
 		startButton.addActionListener(createPauseActionListener());
 	}
 	
-	private ActionListener createPauseActionListener()
-	{
-		return new ActionListener()
-		{
-			public void actionPerformed(ActionEvent pEvent)
-			{
+	private ActionListener createPauseActionListener(){
+		return new ActionListener(){
+			public void actionPerformed(ActionEvent pEvent){
 				TimerModel.getInstance().pause();
 				showStartButton();
 			}
 		};
 	}
 	
-	private ActionListener createStartActionListener()
-	{
-		return new ActionListener()
-		{
-			public void actionPerformed(ActionEvent pEvent)
-			{
+	private ActionListener createStartActionListener(){
+		return new ActionListener(){
+			public void actionPerformed(ActionEvent pEvent){
 				TimerModel.getInstance().start();
 				//If the timer is NOT 00 -- it won't run if it is
-				if(TimerModel.getInstance().isRunning())
-				{
+				if(TimerModel.getInstance().isRunning()){
 					showPauseButton();
 				}
 			}
@@ -178,21 +164,18 @@ public class TimerMainWindowUI extends JPanel implements java.util.Observer
 	}
 
 	@Override
-	public void update(Observable o, Object arg) 
-	{
+	public void update(Observable o, Object arg) {
 		String timeRemaining = TimerModel.getInstance().getTimeRemainingAsString();
 		String nextReminder = TimerModel.getInstance().getNextAlertAsString();
 		
-		if(TimerModel.getInstance().isRunning() & timeRemaining.equals(nextReminder))
-		{
-			//TODO: trigger a better alert -- current one is for debug purposes
+		if(TimerModel.getInstance().isRunning() & timeRemaining.equals(nextReminder)){
+			//TODO: trigger a better or louder alert -- current one is for debug purposes
 			Toolkit.getDefaultToolkit().beep();
 		}
 		//the text might have changed from making a new timer or resetting
 		lTimeRemaining.setText(timeRemaining);
 		
-		if(TimerModel.getInstance().getTimeRemainingInSeconds() == 0)
-		{
+		if(TimerModel.getInstance().getTimeRemainingInSeconds() == 0){
 			showStartButton();
 		}
 		

@@ -6,16 +6,14 @@ import cct.exceptions.TimerOverflowException;
 /**
  * A class that simplifies taking in data from the user to construct timers.
  */
-public class TimeInterval implements Comparable<TimeInterval>
-{
+public class TimeInterval implements Comparable<TimeInterval>{
 	private int seconds;
 	private int minutes;
 	
 	/**
 	 * Constructor for when a timer of 0 length is needed
 	 */
-	public TimeInterval()
-	{
+	public TimeInterval(){
 		seconds = 0;
 		minutes = 0;
 	}
@@ -30,12 +28,10 @@ public class TimeInterval implements Comparable<TimeInterval>
 	 * @throws NegativeInputException when a negative number is passed as an argument.
 	 * @throws TimerOverflowException when a time interval greater than what is supported is given. 
 	 */
-	public TimeInterval(int pSeconds, int pMinutes) throws NegativeInputException, TimerOverflowException
-	{
+	public TimeInterval(int pSeconds, int pMinutes) throws NegativeInputException, TimerOverflowException{
 		if(pSeconds < 0 || pMinutes < 0) throw new NegativeInputException();
 		
-		if(pSeconds >= 60)
-		{
+		if(pSeconds >= 60){
 			int extraMinutes = pSeconds/60;
 			pMinutes = pMinutes + extraMinutes;
 			pSeconds = pSeconds - extraMinutes*60;
@@ -50,32 +46,28 @@ public class TimeInterval implements Comparable<TimeInterval>
 	/**
 	 * @return the total time of the time interval in seconds.
 	 */
-	public int getTotalTimeInSeconds()
-	{
+	public int getTotalTimeInSeconds(){
 		return minutes * 60 + seconds;
 	}
 	
 	/**
 	 * @return the number of seconds stored in the interval when minutes are ignored.
 	 */
-	public int getSeconds()
-	{
+	public int getSeconds(){
 		return seconds;
 	}
 	
 	/**
 	 * @return the number of minutes stored in the interval.
 	 */
-	public int getMinutes()
-	{
+	public int getMinutes(){
 		return minutes;
 	}
 	
 	/**
 	 * @return returns a string representation in the format 00:00
 	 */
-	public String toString()
-	{
+	public String toString(){
 		String minString;
 		if(minutes < 10) minString = new String("0" + minutes + ":");
 		else minString = new String(minutes + ":");

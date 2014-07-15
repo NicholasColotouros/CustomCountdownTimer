@@ -5,7 +5,6 @@ package cct.exceptions;
  */
 @SuppressWarnings("serial")
 public class ReminderLongerThanDurationException extends
-		IllegalArgumentException 
-{
+		IllegalArgumentException {
 
 }

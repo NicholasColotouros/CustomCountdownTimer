@@ -18,8 +18,7 @@ import cct.model.TimerModel;
 
 
 @SuppressWarnings("serial")
-public class TimerSetupWindow extends JDialog 
-{
+public class TimerSetupWindow extends JDialog {
 	private static ResourceBundle STRINGS = CustomCountdownTimerUI.getResourceBundle();
 	
 	private static final int TEXT_FIELD_SIZE = 3;
@@ -32,8 +31,7 @@ public class TimerSetupWindow extends JDialog
 	
 	private NumberFormat timeFormat;
 	
-	public TimerSetupWindow(Dimension aSize)
-	{
+	public TimerSetupWindow(Dimension aSize){
 		setTitle(STRINGS.getString("setup"));
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setSize(aSize);
@@ -87,11 +85,9 @@ public class TimerSetupWindow extends JDialog
 		confirmationContainer.add(cancelButton);
 		
 		//ActionListeners for the two buttons
-		okButton.addActionListener(new ActionListener()
-		{
+		okButton.addActionListener(new ActionListener(){
 			@Override
-			public void actionPerformed(ActionEvent pEvent)
-			{
+			public void actionPerformed(ActionEvent pEvent){
 				//TODO: set the timer and close it
 				//TimerModel.getInstance().setTimer(/*ARGUMENTS*/);
 				
@@ -99,11 +95,9 @@ public class TimerSetupWindow extends JDialog
 			}
 		});
 		
-		cancelButton.addActionListener(new ActionListener()
-		{
+		cancelButton.addActionListener(new ActionListener(){
 			@Override
-			public void actionPerformed(ActionEvent pEvent)
-			{
+			public void actionPerformed(ActionEvent pEvent){
 				setVisible(false);
 			}
 		});
