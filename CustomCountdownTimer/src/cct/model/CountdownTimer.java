@@ -1,11 +1,12 @@
 package cct.model;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import cct.exceptions.ReminderLongerThanDurationException;
+import cct.exceptions.StorageException;
 
-//TODO: implement serializability
 /**
  * This is the timer that the model relies on. This is not the model
  * itself because the model contains properties which do not need
@@ -14,7 +15,11 @@ import cct.exceptions.ReminderLongerThanDurationException;
  * Contains a duration, which will how long the timer counts down
  * and a list of time intervals for which an alert will be triggered.
  */
-public class CountdownTimer{
+public class CountdownTimer implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -284861870284581145L;
 	public TimeInterval duration;
 	public ArrayList<TimeInterval> reminders;
 	
@@ -63,6 +68,42 @@ public class CountdownTimer{
 		reminders = pReminders;
 	}
 	
-//	public void save(String path) throws storageException;
-	//public void load(String path) throws storageException;
+	/**
+	 * Saves the CountdownTimer
+	 * @param fileName is the full file name.
+	 * @throws StorageException upon failing to save.
+	 */
+	public void save(String fileName) throws StorageException{
+		try{
+			ObjectOutputStream out = new ObjectOutputStream(
+					new FileOutputStream(fileName));
+			out.writeObject(this);
+			out.close();
+		}
+		catch(IOException e){
+			throw new StorageException();
+		}
+	}
+	
+	/**
+	 * Loads a CountdownTimer from a file. Assumes the file name is valid.
+	 * @param fileName the full file name.
+	 * @return the loaded CountdownTimer.
+	 * @throws StorageException upon failing to load.
+	 */
+	public CountdownTimer load(String fileName) throws StorageException{
+		try{
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName));
+			CountdownTimer ret = (CountdownTimer)in.readObject();
+			in.close();
+			return ret;
+			
+		} catch(IOException e){
+			throw new StorageException();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
